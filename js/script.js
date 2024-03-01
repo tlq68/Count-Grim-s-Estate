@@ -1,5 +1,23 @@
 /* script.js */
+
+// Import everything from Act1.js
+import * as act1 from './acts/act1.js';
+
+// Import everything from Act2.js
+import * as act2 from './acts/act2.js';
+
+// Import everything from Act3.js
+import * as act3 from './acts/act3.js';
+
+// Import everything from Act4.js
+import * as act4 from './acts/act4.js';
+
+// Import everything from Act5.js
+import * as act5 from './acts/act5.js';
+
 (function() {
+    const alertMessage = `${act1.alertText()} ${act2.alertText()} ${act3.alertText()} ${act4.alertText()} ${act5.alertText()}`;
+    alert(alertMessage)
     const startingText = "Welcome? Use the buttons above.";
     const typingSpeed = 50; // in milliseconds
     let textIndex = 0;
