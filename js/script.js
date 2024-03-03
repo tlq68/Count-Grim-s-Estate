@@ -78,10 +78,6 @@ import * as act5 from './acts/act5.js';
     let monsterHealth;
     let inventory = ['stick'];
 
-    const button1 = document.querySelector('#button1');
-    const button2 = document.querySelector('#button2');
-    const button3 = document.querySelector('#button3');
-    const text = document.querySelector('#text');
     const xpText = document.querySelector('#xpText');
     const healthText = document.querySelector('#healthText');
     const goldText = document.querySelector('#goldText');
@@ -152,41 +148,22 @@ import * as act5 from './acts/act5.js';
         }
     ];
 
-    // Function to update the UI with the given location
     function update(location) {
         textIndex = 0;
         const textElement = document.getElementById('text');
         textElement.textContent = ''; // Reset text content
         typeText(location.text);
         monsterStats.style.display = "none";
-
-        // Set button text and functions
-        button1.innerText = location.buttons[0].text;
-        button2.innerText = location.buttons[1].text;
-        button3.innerText = location.buttons[2].text;
-        button1.onclick = location.buttons[0].func;
-        button2.onclick = location.buttons[1].func;
-        button3.onclick = location.buttons[2].func;
-    }
-
-    // Function to render buttons dynamically
-    function renderButtons(location) {
-        const buttonsContainer = document.getElementById('controls');
-        buttonsContainer.innerHTML = ''; // Clear previous buttons
-
-        location.buttons.forEach((buttonData, index) => {
-            const button = document.createElement('button');
+    
+        // Loop through all buttons in the location
+        for (let i = 0; i < location.buttons.length; i++) {
+            const buttonData = location.buttons[i];
+            const button = document.querySelector(`#button${i + 1}`); // Select button by ID
+    
+            // Update button text and function
             button.innerText = buttonData.text;
             button.onclick = buttonData.func;
-            button.id = `button${index + 1}`; // Set button id
-            buttonsContainer.classList.add('hide');
-            buttonsContainer.appendChild(button);
-        });
-
-        // Show buttons after typing animation is complete
-        setTimeout(() => {
-            buttonsContainer.classList.remove('hide');
-        }, text.length); // Add some extra time for safety
+        }
     }
 
     function goStore() {
