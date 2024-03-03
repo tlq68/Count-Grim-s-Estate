@@ -16,8 +16,6 @@ import * as act4 from './acts/act4.js';
 import * as act5 from './acts/act5.js';
 
 (function() {
-    const alertMessage = `${act1.alertText()} ${act2.alertText()} ${act3.alertText()} ${act4.alertText()} ${act5.alertText()}`;
-    alert(alertMessage)
     const startingText = "Welcome? Use the buttons above.";
     const typingSpeed = 50; // in milliseconds
     let textIndex = 0;
@@ -26,28 +24,31 @@ import * as act5 from './acts/act5.js';
     function typeText(text) {
         const textElement = document.getElementById('text');
         const cursorElement = document.getElementById('cursor');
-
+        const buttonsContainer = document.getElementById('controls'); // Get buttons container
+    
+        
+        // Function to render buttons dynamically
         function renderButtons(location) {
-            const button1 = document.querySelector('#button1');
-            const button2 = document.querySelector('#button2');
-            const button3 = document.querySelector('#button3');
-        
-            hideButtons();
+            const buttonsContainer = document.getElementById('controls');
+            buttonsContainer.innerHTML = ''; // Clear previous buttons
 
-            // Set button text and functions
-            button1.innerText = location["button text"][0];
-            button2.innerText = location["button text"][1];
-            button3.innerText = location["button text"][2];
-            button1.onclick = location["button functions"][0];
-            button2.onclick = location["button functions"][1];
-            button3.onclick = location["button functions"][2];
-        
+            // Hide buttons before rendering
+            buttonsContainer.classList.add('hide');
+
+            location.buttons.forEach((buttonData, index) => {
+                const button = document.createElement('button');
+                button.innerText = buttonData.text;
+                button.onclick = buttonData.func;
+                button.id = `button${index + 1}`; // Set button id
+                buttonsContainer.appendChild(button);
+            });
+
             // Show buttons after typing animation is complete
             setTimeout(() => {
-                showButtons();
-            }, text.length); // Add some extra time for safety
-        }        
-
+                buttonsContainer.classList.remove('hide');
+            }, location.text.length); // Adjust timing based on starting text length and typing speed
+        }
+    
         function typeNextCharacter() {
             textElement.textContent += text[textIndex];
             textIndex++;
@@ -58,20 +59,12 @@ import * as act5 from './acts/act5.js';
                 renderButtons(locations[currentLocationIndex]);
             }
         }
-
+    
+        // Hide buttons before starting the typing animation
+        buttonsContainer.classList.add('hide');
+    
+        // Start typing animation
         typeNextCharacter();
-    }
-
-    const hideButtons = () => {
-        button1.classList.add('hide');
-        button2.classList.add('hide');
-        button3.classList.add('hide');
-    }
-
-    const showButtons = () => {
-        button1.classList.remove('hide');
-        button2.classList.remove('hide');
-        button3.classList.remove('hide');
     }
 
     // Call typeText function with starting text
@@ -121,63 +114,92 @@ import * as act5 from './acts/act5.js';
     const locations = [
         {
             name: "town square",
-            "button text": ["Go to store", "Go to cave", "Fight dragon"],
-            "button functions": [goStore, goCave, fightDragon],
+            buttons: [
+                { text: "Go to store", func: goStore },
+                { text: "Go to store", func: goStore },
+                { text: "Go to cave", func: goCave },
+                { text: "Fight dragon", func: fightDragon }
+            ],
             text: "You are in the town square. You see a sign that says Store."
         },
         {
             name: "town square",
-            "button text": ["Go to store", "Go to cave", "Fight dragon"],
-            "button functions": [goStore, goCave, fightDragon],
+            buttons: [
+                { text: "Go to store", func: goStore },
+                { text: "Go to store", func: goStore },
+                { text: "Go to cave", func: goCave },
+                { text: "Fight dragon", func: fightDragon }
+            ],
             text: "You are in the town square. You see a sign that says Store."
         },
         {
             name: "town square",
-            "button text": ["Go to store", "Go to cave", "Fight dragon"],
-            "button functions": [goStore, goCave, fightDragon],
+            buttons: [
+                { text: "Go to store", func: goStore },
+                { text: "Go to cave", func: goCave },
+                { text: "Fight dragon", func: fightDragon }
+            ],
             text: "You are in the town square. You see a sign that says Store."
         },
         {
             name: "town square",
-            "button text": ["Go to store", "Go to cave", "Fight dragon"],
-            "button functions": [goStore, goCave, fightDragon],
+            buttons: [
+                { text: "Go to store", func: goStore },
+                { text: "Go to cave", func: goCave },
+                { text: "Fight dragon", func: fightDragon }
+            ],
             text: "Behold the mighty dragon!!!"
-        },
+        }
     ];
 
-    // Initialize buttons
-    button1.onclick = goStore;
-    button2.onclick = goCave;
-    button3.onclick = fightDragon;
-
+    // Function to update the UI with the given location
     function update(location) {
         textIndex = 0;
         const textElement = document.getElementById('text');
         textElement.textContent = ''; // Reset text content
         typeText(location.text);
         monsterStats.style.display = "none";
-        button1.innerText = location["button text"][0];
-        button2.innerText = location["button text"][1];
-        button3.innerText = location["button text"][2];
-        button1.onclick = location["button functions"][0];
-        button2.onclick = location["button functions"][1];
-        button3.onclick = location["button functions"][2];
+
+        // Set button text and functions
+        button1.innerText = location.buttons[0].text;
+        button2.innerText = location.buttons[1].text;
+        button3.innerText = location.buttons[2].text;
+        button1.onclick = location.buttons[0].func;
+        button2.onclick = location.buttons[1].func;
+        button3.onclick = location.buttons[2].func;
+    }
+
+    // Function to render buttons dynamically
+    function renderButtons(location) {
+        const buttonsContainer = document.getElementById('controls');
+        buttonsContainer.innerHTML = ''; // Clear previous buttons
+
+        location.buttons.forEach((buttonData, index) => {
+            const button = document.createElement('button');
+            button.innerText = buttonData.text;
+            button.onclick = buttonData.func;
+            button.id = `button${index + 1}`; // Set button id
+            buttonsContainer.classList.add('hide');
+            buttonsContainer.appendChild(button);
+        });
+
+        // Show buttons after typing animation is complete
+        setTimeout(() => {
+            buttonsContainer.classList.remove('hide');
+        }, text.length); // Add some extra time for safety
     }
 
     function goStore() {
-        hideButtons();
         currentLocationIndex = 1; // Update current location index
         update(locations[currentLocationIndex]);
     }
 
     function goCave() {
-        hideButtons();
         currentLocationIndex = 2; // Update current location index
         update(locations[currentLocationIndex]);
     }
 
     function fightDragon() {
-        hideButtons();
         currentLocationIndex = 3; // Update current location index
         update(locations[currentLocationIndex]);
     }
