@@ -183,7 +183,6 @@ function restart() {
     const confirmRestart = window.confirm("Are you sure you want to restart the game?");
 
     // If the player confirms the restart
-    alert(confirmRestart)
     if (confirmRestart) {
         // Perform the restart actions
         xp = 0;
@@ -198,6 +197,8 @@ function restart() {
         goldText.innerText = gold;
         healthText.innerText = health;
         xpText.innerText = xp;
+        update(locations[currentLocationIndex]);
+        alert('You restarted')
         toggleMenu();
     } else {
         // If the player cancels, do nothing
@@ -253,59 +254,50 @@ if (savedGameState) {
     
 
     // Create menu button
-const menuButton = document.createElement('button');
-menuButton.setAttribute('id', 'menu-button');
-menuButton.textContent = 'Close Menu';
-menuButton.addEventListener('click', toggleMenu);
+    const menuButton = document.createElement('button');
+    menuButton.setAttribute('id', 'menu-button');
+    menuButton.textContent = 'Close Menu';
+    menuButton.addEventListener('click', toggleMenu);
 
-// Append menu button to the menu div
-const menuDiv = document.getElementById('menu-content');
-menuDiv.appendChild(menuButton);
+    // Append menu button to the menu div
+    const menuDiv = document.getElementById('menu-content');
+    menuDiv.appendChild(menuButton);
 
-// Create menu content div
-const menuContentDiv = document.createElement('div');
-menuContentDiv.setAttribute('id', 'menu-content');
+    // Create menu content div
+    const menuContentDiv = document.createElement('div');
+    menuContentDiv.setAttribute('id', 'menu-content');
 
-const openMenuButton = document.getElementById('open-menu');
-openMenuButton.addEventListener('click', toggleMenu);
+    const openMenuButton = document.getElementById('open-menu');
+    openMenuButton.addEventListener('click', toggleMenu);
 
-// Create buttons for the menu content
-const quitButton = document.createElement('button');
-quitButton.textContent = 'Restart Game';
-quitButton.addEventListener('click', restartGame);
+    // Create buttons for the menu content
+    const restartButton = document.createElement('button');
+    restartButton.textContent = 'Restart Game';
+    restartButton.addEventListener('click', restart);
 
-const checkpointButton = document.createElement('button');
-checkpointButton.textContent = 'Return to Checkpoint';
-checkpointButton.addEventListener('click', returnToCheckpoint);
+    const checkpointButton = document.createElement('button');
+    checkpointButton.textContent = 'Return to Checkpoint';
+    checkpointButton.addEventListener('click', returnToCheckpoint);
 
-const hintButton = document.createElement('button');
-hintButton.textContent = 'Hint';
-hintButton.addEventListener('click', showHint);
+    const hintButton = document.createElement('button');
+    hintButton.textContent = 'Hint';
+    hintButton.addEventListener('click', showHint);
 
-// Append buttons to the menu content div
-menuContentDiv.appendChild(quitButton);
-menuContentDiv.appendChild(checkpointButton);
-menuContentDiv.appendChild(hintButton);
+    // Append buttons to the menu content div
+    menuContentDiv.appendChild(restartButton);
+    menuContentDiv.appendChild(checkpointButton);
+    menuContentDiv.appendChild(hintButton);
 
-// Append menu content div to the menu div
-menuDiv.appendChild(menuContentDiv);
+    // Append menu content div to the menu div
+    menuDiv.appendChild(menuContentDiv);
 
+    function returnToCheckpoint() {
+        alert('Return to Checkpoint');
+    }
 
-
-// Example functions for menu buttons
-function restartGame() {
-    restart();
-    update(locations[currentLocationIndex]);
-    alert('You restarted')
-}
-
-function returnToCheckpoint() {
-    alert('Return to Checkpoint');
-}
-
-function showHint() {
-    alert('Show Hint');
-}
+    function showHint() {
+        alert('Show Hint');
+    }
   
     // Event listener for the escape key
     document.addEventListener('keydown', function(event) {
@@ -313,8 +305,6 @@ function showHint() {
             toggleMenu();
         }
     });
-
-       
 
     // Save the game State
     saveGameState();
