@@ -19,8 +19,8 @@ import * as act5 from './acts/act5.js';
     const startingText = "Welcome? Use the buttons above.";
     const typingSpeed = 50; // in milliseconds
     let textIndex = 0;
-    let currentLocationIndex = 0; // Track the current location index
-
+    let currentLocationIndex = saveGameState.currentLocationIndex || 0; // Track the current location index
+    
     function typeText(text) {
         const textElement = document.getElementById('text');
         const cursorElement = document.getElementById('cursor');
@@ -67,8 +67,7 @@ import * as act5 from './acts/act5.js';
         typeNextCharacter();
     }
 
-    // Call typeText function with starting text
-    typeText(startingText);
+    
 
     let xp = 0;
     let health = 100;
@@ -77,6 +76,30 @@ import * as act5 from './acts/act5.js';
     let fighting;
     let monsterHealth;
     let inventory = ['stick'];
+
+    // Load game state from local storage if available
+    const savedGameState = JSON.parse(localStorage.getItem('gameState'));
+    if (savedGameState) {
+        // Load player stats, current location, etc.
+        xp = savedGameState.xp || 0;
+        health = savedGameState.health || 100;
+        gold = savedGameState.gold || 50;
+        currentWeapon = savedGameState.currentWeapon || 0;
+        inventory = savedGameState.inventory || ["stick"];
+        currentLocationIndex = savedGameState.currentLocationIndex || 0;
+    }
+
+    function saveGameState() {
+        // Save relevant game data to local storage
+        localStorage.setItem('gameState', JSON.stringify({
+            xp: xp,
+            health: health,
+            gold: gold,
+            currentWeapon: currentWeapon,
+            inventory: inventory,
+            currentLocationIndex: locations[currentLocationIndex].id
+        }));
+    }
 
     const xpText = document.querySelector('#xpText');
     const healthText = document.querySelector('#healthText');
@@ -172,21 +195,25 @@ import * as act5 from './acts/act5.js';
     function goStore() {
         currentLocationIndex = 0; // Update current location index
         update(locations[currentLocationIndex]);
+        saveGameState();
     }
 
     function enterHouse() {
         currentLocationIndex = 1; // Update current location index
         update(locations[currentLocationIndex]);
+        saveGameState();
     }
 
     function goCave() {
         currentLocationIndex = 2; // Update current location index
         update(locations[currentLocationIndex]);
+        saveGameState();
     }
 
     function fightDragon() {
         currentLocationIndex = 3; // Update current location index
         update(locations[currentLocationIndex]);
+        saveGameState();
     }
     function inFightWithDragon() {
         alert("You are fighting a dragon.")
@@ -227,4 +254,20 @@ import * as act5 from './acts/act5.js';
         xpText.innerText = xp;
         goTown();
     }
+
+    // Save the game State
+    saveGameState();
+
+    // Call typeText function with starting text
+    //typeText(startingText);
+
+    alert(currentLocationIndex)
+    // Go to the starting location
+    update(locations[currentLocationIndex]);
+
+    // Save game state when leaving the page
+    window.addEventListener('beforeunload', saveGameState);
+
+    // Call typeText function with startingText
+    typeText(startingText);
 })();
