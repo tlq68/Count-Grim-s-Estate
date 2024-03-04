@@ -19,7 +19,7 @@ import * as act5 from './acts/act5.js';
 alert("Don't forget to reorganize code and do tests. Check GPT for game saving setup.")
 const startingText = "Welcome? Use the buttons above.";
 const typingSpeed = 50; // in milliseconds
-let textIndex = 0;
+let currentTextIndex = 0;
 let xp = 0;
 let health = 100;
 let gold = 50;
@@ -62,12 +62,12 @@ function typeText(text) {
         buttonsContainer.classList.add('hide');
 
         location.buttons.forEach((buttonData, index) => {
-            const button = document.createElement('button');
-            button.innerText = buttonData.text;
-            button.onclick = buttonData.func;
-            button.id = `button${index + 1}`; // Set button id
-            buttonsContainer.appendChild(button);
-            console.log(button.id)
+            const choiceButton = document.createElement('button');
+            choiceButton.innerText = buttonData.text;
+            choiceButton.onclick = buttonData.func;
+            choiceButton.id = `button${index + 1}`; // Set button id
+            buttonsContainer.appendChild(choiceButton);
+            console.log(choiceButton.id)
         });
 
         // Show buttons after typing animation is complete
@@ -77,9 +77,9 @@ function typeText(text) {
     }
 
     function typeNextCharacter() {
-        textElement.textContent += text[textIndex];
-        textIndex++;
-        if (textIndex < text.length) {
+        textElement.textContent += text[currentTextIndex];
+        currentTextIndex++;
+        if (currentTextIndex < text.length) {
             setTimeout(typeNextCharacter, typingSpeed);
         } else {
             // Animation complete, render buttons
@@ -95,7 +95,7 @@ function typeText(text) {
 }
 
 function update(location) {
-    textIndex = 0;
+    currentTextIndex = 0;
     const textElement = document.getElementById('text');
     textElement.textContent = ''; // Reset text content
     typeText(location.text);
@@ -191,7 +191,7 @@ function restart() {
         currentWeapon = 0;
 
         currentLocationIndex = 0;
-        textIndex = 0;
+        currentTextIndex = 0;
 
         inventory = ["stick"];
         goldText.innerText = gold;
