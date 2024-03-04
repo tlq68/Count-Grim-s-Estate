@@ -41,6 +41,7 @@ import * as act5 from './acts/act5.js';
                 button.onclick = buttonData.func;
                 button.id = `button${index + 1}`; // Set button id
                 buttonsContainer.appendChild(button);
+                console.log(button.id)
             });
 
             // Show buttons after typing animation is complete
@@ -66,8 +67,6 @@ import * as act5 from './acts/act5.js';
         // Start typing animation
         typeNextCharacter();
     }
-
-    
 
     let xp = 0;
     let health = 100;
@@ -183,12 +182,15 @@ import * as act5 from './acts/act5.js';
     
         // Loop through all buttons in the location
         for (let i = 0; i < location.buttons.length; i++) {
+            console.log(location.buttons[i])
             const buttonData = location.buttons[i];
             const button = document.querySelector(`#button${i + 1}`); // Select button by ID
-    
-            // Update button text and function
-            button.innerText = buttonData.text;
-            button.onclick = buttonData.func;
+            if (button) {
+                // Update button text and function
+                button.innerText = buttonData.text;
+                button.onclick = buttonData.func;
+            }
+            
         }
     }
 
@@ -243,16 +245,85 @@ import * as act5 from './acts/act5.js';
         update(locations[6]);
     }
 
+    // Create menu button
+const menuButton = document.createElement('button');
+menuButton.setAttribute('id', 'menu-button');
+menuButton.textContent = 'Menu';
+menuButton.addEventListener('click', toggleMenu);
+
+// Append menu button to the menu div
+const menuDiv = document.getElementById('menu');
+menuDiv.appendChild(menuButton);
+
+// Create menu content div
+const menuContentDiv = document.createElement('div');
+menuContentDiv.setAttribute('id', 'menu-content');
+
+// Create buttons for the menu content
+const quitButton = document.createElement('button');
+quitButton.textContent = 'Quit';
+quitButton.addEventListener('click', quitGame);
+
+const checkpointButton = document.createElement('button');
+checkpointButton.textContent = 'Return to Checkpoint';
+checkpointButton.addEventListener('click', returnToCheckpoint);
+
+const hintButton = document.createElement('button');
+hintButton.textContent = 'Hint';
+hintButton.addEventListener('click', showHint);
+
+// Append buttons to the menu content div
+menuContentDiv.appendChild(quitButton);
+menuContentDiv.appendChild(checkpointButton);
+menuContentDiv.appendChild(hintButton);
+
+// Append menu content div to the menu div
+menuDiv.appendChild(menuContentDiv);
+
+// Toggle menu function
+function toggleMenu() {
+    const menuContent = document.getElementById('menu');
+    if (menuContent.classList.contains('hide')) {
+        menuContent.classList.remove('hide');
+    } else {
+        menuContent.classList.add('hide');
+
+    }
+}
+
+// Example functions for menu buttons
+function quitGame() {
+    alert('Quit Game');
+}
+
+function returnToCheckpoint() {
+    alert('Return to Checkpoint');
+}
+
+function showHint() {
+    alert('Show Hint');
+}
+  
+    // Event listener for the escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            toggleMenu();
+        }
+    });
+
     function restart() {
+        // Reset player stats and inventory
         xp = 0;
         health = 100;
         gold = 50;
         currentWeapon = 0;
         inventory = ["stick"];
-        goldText.innerText = gold;
-        healthText.innerText = health;
-        xpText.innerText = xp;
-        goTown();
+        
+        // Save the game state
+        saveGameState();
+
+        // Go to the starting location
+        update(locations[0]);
     }
 
     // Save the game State
@@ -261,13 +332,14 @@ import * as act5 from './acts/act5.js';
     // Call typeText function with starting text
     //typeText(startingText);
 
-    alert(currentLocationIndex)
+    //alert(currentLocationIndex)
     // Go to the starting location
+    console.log(locations[currentLocationIndex])
     update(locations[currentLocationIndex]);
 
     // Save game state when leaving the page
     window.addEventListener('beforeunload', saveGameState);
 
     // Call typeText function with startingText
-    typeText(startingText);
+    //typeText(startingText);
 })();
