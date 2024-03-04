@@ -32,6 +32,13 @@ const monsterStats = document.querySelector('#monsterStats');
 const monsterName = document.querySelector('#monsterName');
 const monsterHealthText = document.querySelector('#monsterHealth');
 
+const locations = [
+    {name: "start",id: 0,buttons: [{ text: "Go to store", func: goStore },{ text: "Enter the house", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You are in the town square. You see a sign that says Store."},
+    {name: "enter house",id: 1,buttons: [{ text: "Go back to store", func: goStore },{ text: "Enter next room", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You enter the house and are greeted."},
+    {name: "go cave",id: 2,buttons: [{ text: "Go back to the house", func: enterHouse },{ text: "Go further in the cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You are in a cave"},   
+    {name: "fighting dragon",id: 3,buttons: [{ text: "You are fighting a dragon", func: inFightWithDragon },{ text: "Give up", func: giveUp },{ text: "Just win", func: justWin }],text: "Behold the mighty dragon!!!"}
+];
+
 (function() {
     alert("Don't forget to reorganize code and do tests. Check GPT for game saving setup.")
     const startingText = "Welcome? Use the buttons above.";
@@ -134,50 +141,7 @@ const monsterHealthText = document.querySelector('#monsterHealth');
             health: 300
         }
     ];
-    const locations = [
-        {
-            name: "start",
-            id: 0,
-            buttons: [
-                { text: "Go to store", func: goStore },
-                { text: "Enter the house", func: enterHouse },
-                { text: "Go to cave", func: goCave },
-                { text: "Fight dragon", func: fightDragon }
-            ],
-            text: "You are in the town square. You see a sign that says Store."
-        },
-        {
-            name: "enter house",
-            id: 1,
-            buttons: [
-                { text: "Go back to store", func: goStore },
-                { text: "Enter next room", func: enterHouse },
-                { text: "Go to cave", func: goCave },
-                { text: "Fight dragon", func: fightDragon }
-            ],
-            text: "You enter the house and are greeted."
-        },
-        {
-            name: "go cave",
-            id: 2,
-            buttons: [
-                { text: "Go back to the house", func: enterHouse },
-                { text: "Go further in the cave", func: goCave },
-                { text: "Fight dragon", func: fightDragon }
-            ],
-            text: "You are in a cave"
-        },
-        {
-            name: "4",
-            id: 3,
-            buttons: [
-                { text: "You are fighting a dragon", func: inFightWithDragon },
-                { text: "Give up", func: giveUp },
-                { text: "Just win", func: justWin }
-            ],
-            text: "Behold the mighty dragon!!!"
-        }
-    ];
+    
     function update(location) {
         textIndex = 0;
         const textElement = document.getElementById('text');
