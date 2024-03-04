@@ -49,7 +49,7 @@ body {
 }
 
 #menu-content button {
-  font-size: min(1.8vw, 24px); /* Adjust the font size relative to the viewport width, but not exceeding 24px */
+  font-size: min(1.8vw, 18px); /* Adjust the font size relative to the viewport width, but not exceeding 24px */
   padding: min(1.5vw, 3.5vw) min(1vw, 2vw); /* Adjust the padding relative to the viewport width, but not exceeding 4vw horizontally and 2vw vertically */
   margin: min(2vw, 1em) 0; /* Adjust the margin relative to the viewport width, but not exceeding 1em horizontally and 2vw vertically */
   width: 200px;
