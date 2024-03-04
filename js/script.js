@@ -48,6 +48,15 @@ const choices = [
     {name: "fighting dragon",id: 3,buttons: [{ text: "You are fighting a dragon", func: inFightWithDragon },{ text: "Give up", func: giveUp },{ text: "Just win", func: justWin }],text: "Behold the mighty dragon!!!"}
 ];
 
+// Array of checkpoint objects
+const checkpoints = [
+    {name: "checkpoint 1",location: 0, inventory: {items: [], keyItems: []}}
+]
+
+const hints = [
+    {name: "hint 1", id:1, hint: "You need to make choices and get to the end."}
+]
+
 // Types out text for the page
 // Delays rendering buttons until all words are typed out
 function typeText(text) {
