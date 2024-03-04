@@ -40,6 +40,7 @@ const monsterStats = document.querySelector('#monsterStats');
 const monsterName = document.querySelector('#monsterName');
 const monsterHealthText = document.querySelector('#monsterHealth');
 
+// Array of objects containing the game choices
 const choices = [
     {name: "start",id: 0,buttons: [{ text: "Go to store", func: goStore },{ text: "Enter the house", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You are in the town square. You see a sign that says Store."},
     {name: "enter house",id: 1,buttons: [{ text: "Go back to store", func: goStore },{ text: "Enter next room", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You enter the house and are greeted."},
@@ -47,20 +48,35 @@ const choices = [
     {name: "fighting dragon",id: 3,buttons: [{ text: "You are fighting a dragon", func: inFightWithDragon },{ text: "Give up", func: giveUp },{ text: "Just win", func: justWin }],text: "Behold the mighty dragon!!!"}
 ];
 
+// Types out text for the page
+// Delays rendering buttons until all words are typed out
 function typeText(text) {
-    const textElement = document.getElementById('text');
-    const cursorElement = document.getElementById('cursor');
-    const buttonsContainer = document.getElementById('controls'); // Get buttons container
+    // Declare variables for DOM elements
+    let textElement, buttonsContainer;
 
+    try {
+        // Attempt to access DOM elements
+        textElement = document.getElementById('text');
+        buttonsContainer = document.getElementById('controls');
+    } catch (error) {
+        console.error('Error accessing DOM elements:', error);
+    }
     
     // Function to render buttons dynamically
     function renderButtons(choice) {
-        const buttonsContainer = document.getElementById('controls');
+        let buttonsContainer;
+        try {
+           buttonsContainer = document.getElementById('controls');
+        }
+        catch (error) {
+            console.error('Error accessing DOM elements:', error);
+        }
         buttonsContainer.innerHTML = ''; // Clear previous buttons
 
         // Hide buttons before rendering
         buttonsContainer.classList.add('hide');
 
+        // Creates a button for each button in current choice list
         choice.buttons.forEach((buttonData, index) => {
             const choiceButton = document.createElement('button');
             choiceButton.innerText = buttonData.text;
@@ -76,6 +92,7 @@ function typeText(text) {
         }, choice.text.length); // Adjust timing based on starting text length and typing speed
     }
 
+    // Points to next letter
     function typeNextCharacter() {
         textElement.textContent += text[currentTextIndex];
         currentTextIndex++;
@@ -94,27 +111,33 @@ function typeText(text) {
     typeNextCharacter();
 }
 
-function update(location) {
+// Updates information to be displayed
+function update(choice) {
     currentTextIndex = 0;
-    const textElement = document.getElementById('text');
+    let textElement;
+    try {
+        textElement = document.getElementById('text');
+    } catch (error) {
+        console.error('Error accessing DOM elements:', error);
+    }
     textElement.textContent = ''; // Reset text content
-    typeText(location.text);
+    typeText(choice.text);
     monsterStats.style.display = "none";
 
     // Loop through all buttons in the location
-    for (let i = 0; i < location.buttons.length; i++) {
-        console.log(location.buttons[i])
-        const buttonData = location.buttons[i];
+    for (let i = 0; i < choice.buttons.length; i++) {
+        const buttonData = choice.buttons[i];
         const button = document.querySelector(`#button${i + 1}`); // Select button by ID
         if (button) {
             // Update button text and function
             button.innerText = buttonData.text;
             button.onclick = buttonData.func;
         }
-        
     }
 }
 
+// Various functions to update choice. 
+// THESE SHOULD BE COMBINED INTO ONE FUNCTION
 function goStore() {
     currentChoiceIndex = 0; // Update current location index
     update(choices[currentChoiceIndex]);
@@ -166,8 +189,9 @@ function lose() {
 function winGame() {
     update(choices[6]);
 }
+    
+// Save relevant game data to local storage
 function saveGameState() {
-    // Save relevant game data to local storage
     try {
         localStorage.setItem('gameState', JSON.stringify({
             xp: xp,
@@ -179,13 +203,11 @@ function saveGameState() {
         }));
     } catch (error) {
         console.error('Error saving game state:', error);
-        // Optionally handle the error here, such as showing a user-friendly message
-    }
-    
+    } 
 }
 
+// Resets game to initial state
 function restart() {
-    // Display a confirmation dialog
     const confirmRestart = window.confirm("Are you sure you want to restart the game?");
 
     // If the player confirms the restart
@@ -213,18 +235,23 @@ function restart() {
 
 // Toggle menu function
 function toggleMenuVisibility() {
-    const menuContent = document.getElementById('menu');
+    let menuContent;
+    try {
+       menuContent = document.getElementById('menu');
+    } catch (error) {
+        console.error('Error saving game state:', error);
+    }
+
     if (menuContent.classList.contains('hide')) {
         menuContent.classList.remove('hide');
     } else {
         menuContent.classList.add('hide');
-
     }
 }
 
+// Load player stats, current location, etc.
 try {
     if (savedGameState) {
-        // Load player stats, current location, etc.
         xp = savedGameState.xp || 0;
         health = savedGameState.health || 100;
         gold = savedGameState.gold || 50;
@@ -234,17 +261,18 @@ try {
     }
 } catch (error) {
     console.error('Error initializing game from saved state:', error);
-    // Optionally handle the error here, such as showing a user-friendly message
 }
 
-
+// IIFE containing game logic
 (function() {
+    // Will be changed to items later
     const weapons = [
         { name: 'stick', power: 5 },
         { name: 'dagger', power: 30 },
         { name: 'claw hammer', power: 50 },
         { name: 'sword', power: 100 }
     ];
+    // May be changed to key items
     const monsters = [
         {
             name: "slime",
@@ -262,8 +290,6 @@ try {
             health: 300
         }
     ];
-    
-    
 
     // Create menu button
     const menuButton = document.createElement('button');
@@ -272,14 +298,26 @@ try {
     menuButton.addEventListener('click', toggleMenuVisibility);
 
     // Append menu button to the menu div
-    const menuDiv = document.getElementById('menu-content');
+    let menuDiv;
+    try {
+       menuDiv = document.getElementById('menu-content');
+    } catch (error) {
+        console.error('Error saving game state:', error);
+    }
+
     menuDiv.appendChild(menuButton);
 
     // Create menu content div
     const menuContentDiv = document.createElement('div');
     menuContentDiv.setAttribute('id', 'menu-content');
 
-    const openMenuButton = document.getElementById('open-menu');
+    let openMenuButton;
+    try {
+      openMenuButton = document.getElementById('open-menu');
+    } catch (error) {
+        console.error('Error saving game state:', error);
+    }
+
     openMenuButton.addEventListener('click', toggleMenuVisibility);
 
     // Create buttons for the menu content
@@ -321,17 +359,10 @@ try {
     // Save the game State
     saveGameState();
 
-    // Call typeText function with starting text
-    //typeText(startingText);
-
-    //alert(currentLocationIndex)
-    // Go to the starting location
-    console.log(choices[currentChoiceIndex])
+    // Initial call for current choice information
     update(choices[currentChoiceIndex]);
 
     // Save game state when leaving the page
     window.addEventListener('beforeunload', saveGameState);
 
-    // Call typeText function with startingText
-    //typeText(startingText);
 })();
