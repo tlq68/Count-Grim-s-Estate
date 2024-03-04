@@ -30,7 +30,7 @@ let monsterHealth;
 
 // Load game state from local storage if available
 const savedGameState = JSON.parse(localStorage.getItem('gameState'));
-let currentLocationIndex = saveGameState.currentLocationIndex || 0; // Track the current location index
+let currentChoiceIndex = saveGameState.currentLocationIndex || 0; // Track the current location index
 
 // Define DOM elements
 const xpText = document.querySelector('#xpText');
@@ -40,7 +40,7 @@ const monsterStats = document.querySelector('#monsterStats');
 const monsterName = document.querySelector('#monsterName');
 const monsterHealthText = document.querySelector('#monsterHealth');
 
-const locations = [
+const choices = [
     {name: "start",id: 0,buttons: [{ text: "Go to store", func: goStore },{ text: "Enter the house", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You are in the town square. You see a sign that says Store."},
     {name: "enter house",id: 1,buttons: [{ text: "Go back to store", func: goStore },{ text: "Enter next room", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You enter the house and are greeted."},
     {name: "go cave",id: 2,buttons: [{ text: "Go back to the house", func: enterHouse },{ text: "Go further in the cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You are in a cave"},   
@@ -54,14 +54,14 @@ function typeText(text) {
 
     
     // Function to render buttons dynamically
-    function renderButtons(location) {
+    function renderButtons(choice) {
         const buttonsContainer = document.getElementById('controls');
         buttonsContainer.innerHTML = ''; // Clear previous buttons
 
         // Hide buttons before rendering
         buttonsContainer.classList.add('hide');
 
-        location.buttons.forEach((buttonData, index) => {
+        choice.buttons.forEach((buttonData, index) => {
             const choiceButton = document.createElement('button');
             choiceButton.innerText = buttonData.text;
             choiceButton.onclick = buttonData.func;
@@ -73,7 +73,7 @@ function typeText(text) {
         // Show buttons after typing animation is complete
         setTimeout(() => {
             buttonsContainer.classList.remove('hide');
-        }, location.text.length); // Adjust timing based on starting text length and typing speed
+        }, choice.text.length); // Adjust timing based on starting text length and typing speed
     }
 
     function typeNextCharacter() {
@@ -83,7 +83,7 @@ function typeText(text) {
             setTimeout(typeNextCharacter, typingSpeed);
         } else {
             // Animation complete, render buttons
-            renderButtons(locations[currentLocationIndex]);
+            renderButtons(choices[currentChoiceIndex]);
         }
     }
 
@@ -116,26 +116,26 @@ function update(location) {
 }
 
 function goStore() {
-    currentLocationIndex = 0; // Update current location index
-    update(locations[currentLocationIndex]);
+    currentChoiceIndex = 0; // Update current location index
+    update(choices[currentChoiceIndex]);
     saveGameState();
 }
 
 function enterHouse() {
-    currentLocationIndex = 1; // Update current location index
-    update(locations[currentLocationIndex]);
+    currentChoiceIndex = 1; // Update current location index
+    update(choices[currentChoiceIndex]);
     saveGameState();
 }
 
 function goCave() {
-    currentLocationIndex = 2; // Update current location index
-    update(locations[currentLocationIndex]);
+    currentChoiceIndex = 2; // Update current location index
+    update(choices[currentChoiceIndex]);
     saveGameState();
 }
 
 function fightDragon() {
-    currentLocationIndex = 3; // Update current location index
-    update(locations[currentLocationIndex]);
+    currentChoiceIndex = 3; // Update current location index
+    update(choices[currentChoiceIndex]);
     saveGameState();
 }
 
@@ -152,7 +152,7 @@ function justWin() {
 }
 
 function goFight() {
-    update(locations[3]);
+    update(choices[3]);
     monsterHealth = monsters[fighting].health;
     monsterStats.style.display = "block";
     monsterName.innerText = monsters[fighting].name;
@@ -160,11 +160,11 @@ function goFight() {
 }
 
 function lose() {
-    update(locations[5]);
+    update(choices[5]);
 }
 
 function winGame() {
-    update(locations[6]);
+    update(choices[6]);
 }
 function saveGameState() {
     // Save relevant game data to local storage
@@ -174,7 +174,7 @@ function saveGameState() {
         gold: gold,
         currentWeapon: currentWeapon,
         inventory: inventory,
-        currentLocationIndex: locations[currentLocationIndex].id
+        currentLocationIndex: choices[currentChoiceIndex].id
     }));
 }
 
@@ -190,23 +190,23 @@ function restart() {
         gold = 50;
         currentWeapon = 0;
 
-        currentLocationIndex = 0;
+        currentChoiceIndex = 0;
         currentTextIndex = 0;
 
         inventory = ["stick"];
         goldText.innerText = gold;
         healthText.innerText = health;
         xpText.innerText = xp;
-        update(locations[currentLocationIndex]);
+        update(choices[currentChoiceIndex]);
         alert('You restarted')
-        toggleMenu();
+        toggleMenuVisibility();
     } else {
         // If the player cancels, do nothing
     }
 } 
 
 // Toggle menu function
-function toggleMenu() {
+function toggleMenuVisibility() {
     const menuContent = document.getElementById('menu');
     if (menuContent.classList.contains('hide')) {
         menuContent.classList.remove('hide');
@@ -223,7 +223,7 @@ if (savedGameState) {
         gold = savedGameState.gold || 50;
         currentWeapon = savedGameState.currentWeapon || 0;
         inventory = savedGameState.inventory || ["stick"];
-        currentLocationIndex = savedGameState.currentLocationIndex || 0;
+        currentChoiceIndex = savedGameState.currentLocationIndex || 0;
     }
 
 (function() {
@@ -257,7 +257,7 @@ if (savedGameState) {
     const menuButton = document.createElement('button');
     menuButton.setAttribute('id', 'menu-button');
     menuButton.textContent = 'Close Menu';
-    menuButton.addEventListener('click', toggleMenu);
+    menuButton.addEventListener('click', toggleMenuVisibility);
 
     // Append menu button to the menu div
     const menuDiv = document.getElementById('menu-content');
@@ -268,7 +268,7 @@ if (savedGameState) {
     menuContentDiv.setAttribute('id', 'menu-content');
 
     const openMenuButton = document.getElementById('open-menu');
-    openMenuButton.addEventListener('click', toggleMenu);
+    openMenuButton.addEventListener('click', toggleMenuVisibility);
 
     // Create buttons for the menu content
     const restartButton = document.createElement('button');
@@ -302,7 +302,7 @@ if (savedGameState) {
     // Event listener for the escape key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
-            toggleMenu();
+            toggleMenuVisibility();
         }
     });
 
@@ -314,8 +314,8 @@ if (savedGameState) {
 
     //alert(currentLocationIndex)
     // Go to the starting location
-    console.log(locations[currentLocationIndex])
-    update(locations[currentLocationIndex]);
+    console.log(choices[currentChoiceIndex])
+    update(choices[currentChoiceIndex]);
 
     // Save game state when leaving the page
     window.addEventListener('beforeunload', saveGameState);
