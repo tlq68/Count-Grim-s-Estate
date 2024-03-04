@@ -17,7 +17,6 @@ import * as act5 from './acts/act5.js';
 
 // Define global variables
 alert("Don't forget to reorganize code and do tests. Check GPT for game saving setup.")
-const startingText = "Welcome? Use the buttons above.";
 const typingSpeed = 50; // in milliseconds
 let currentTextIndex = 0;
 let xp = 0;
@@ -56,6 +55,9 @@ const checkpoints = [
 const hints = [
     {name: "hint 1", id:1, hint: "You need to make choices and get to the end."}
 ]
+
+let checkpoint = checkpoints[0];
+let hint = hints[0];
 
 // Types out text for the page
 // Delays rendering buttons until all words are typed out
@@ -260,11 +262,11 @@ function restart() {
 
 // Other functions for menu buttons
 function returnToCheckpoint() {
-    alert('Return to Checkpoint');
+    alert(checkpoint.name);
 }
 
 function showHint() {
-    alert('Show Hint');
+    alert(hint.hint);
 }
 
 // Load player stats, current location, etc.
