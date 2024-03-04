@@ -296,7 +296,9 @@ function toggleMenu() {
 
 // Example functions for menu buttons
 function restartGame() {
-    alert('Restart Game');
+    restart();
+    update(locations[currentLocationIndex]);
+    alert('You restarted')
 }
 
 function returnToCheckpoint() {
@@ -315,19 +317,30 @@ function showHint() {
     });
 
     function restart() {
-        // Reset player stats and inventory
-        xp = 0;
-        health = 100;
-        gold = 50;
-        currentWeapon = 0;
-        inventory = ["stick"];
-        
-        // Save the game state
-        saveGameState();
+        // Display a confirmation dialog
+        const confirmRestart = window.confirm("Are you sure you want to restart the game?");
+    
+        // If the player confirms the restart
+        alert(confirmRestart)
+        if (confirmRestart) {
+            // Perform the restart actions
+            xp = 0;
+            health = 100;
+            gold = 50;
+            currentWeapon = 0;
 
-        // Go to the starting location
-        update(locations[0]);
-    }
+            currentLocationIndex = 0;
+            textIndex = 0;
+            
+            inventory = ["stick"];
+            goldText.innerText = gold;
+            healthText.innerText = health;
+            xpText.innerText = xp;
+            toggleMenu();
+        } else {
+            // If the player cancels, do nothing
+        }
+    }    
 
     // Save the game State
     saveGameState();
