@@ -15,7 +15,25 @@ import * as act4 from './acts/act4.js';
 // Import everything from Act5.js
 import * as act5 from './acts/act5.js';
 
+// Define global variables
+let xp = 0;
+let health = 100;
+let gold = 50;
+let currentWeapon = 0;
+let inventory = ['stick'];
+let fighting;
+let monsterHealth;
+
+// Define DOM elements
+const xpText = document.querySelector('#xpText');
+const healthText = document.querySelector('#healthText');
+const goldText = document.querySelector('#goldText');
+const monsterStats = document.querySelector('#monsterStats');
+const monsterName = document.querySelector('#monsterName');
+const monsterHealthText = document.querySelector('#monsterHealth');
+
 (function() {
+    alert("Don't forget to reorganize code and do tests. Check GPT for game saving setup.")
     const startingText = "Welcome? Use the buttons above.";
     const typingSpeed = 50; // in milliseconds
     let textIndex = 0;
@@ -68,14 +86,6 @@ import * as act5 from './acts/act5.js';
         typeNextCharacter();
     }
 
-    let xp = 0;
-    let health = 100;
-    let gold = 50;
-    let currentWeapon = 0;
-    let fighting;
-    let monsterHealth;
-    let inventory = ['stick'];
-
     // Load game state from local storage if available
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
     if (savedGameState) {
@@ -100,12 +110,7 @@ import * as act5 from './acts/act5.js';
         }));
     }
 
-    const xpText = document.querySelector('#xpText');
-    const healthText = document.querySelector('#healthText');
-    const goldText = document.querySelector('#goldText');
-    const monsterStats = document.querySelector('#monsterStats');
-    const monsterName = document.querySelector('#monsterName');
-    const monsterHealthText = document.querySelector('#monsterHealth');
+   
     const weapons = [
         { name: 'stick', power: 5 },
         { name: 'dagger', power: 30 },
@@ -331,7 +336,7 @@ function showHint() {
 
             currentLocationIndex = 0;
             textIndex = 0;
-            
+
             inventory = ["stick"];
             goldText.innerText = gold;
             healthText.innerText = health;
