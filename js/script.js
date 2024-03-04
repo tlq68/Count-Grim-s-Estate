@@ -248,21 +248,24 @@ import * as act5 from './acts/act5.js';
     // Create menu button
 const menuButton = document.createElement('button');
 menuButton.setAttribute('id', 'menu-button');
-menuButton.textContent = 'Menu';
+menuButton.textContent = 'Close Menu';
 menuButton.addEventListener('click', toggleMenu);
 
 // Append menu button to the menu div
-const menuDiv = document.getElementById('menu');
+const menuDiv = document.getElementById('menu-content');
 menuDiv.appendChild(menuButton);
 
 // Create menu content div
 const menuContentDiv = document.createElement('div');
 menuContentDiv.setAttribute('id', 'menu-content');
 
+const openMenuButton = document.getElementById('open-menu');
+openMenuButton.addEventListener('click', toggleMenu);
+
 // Create buttons for the menu content
 const quitButton = document.createElement('button');
-quitButton.textContent = 'Quit';
-quitButton.addEventListener('click', quitGame);
+quitButton.textContent = 'Restart Game';
+quitButton.addEventListener('click', restartGame);
 
 const checkpointButton = document.createElement('button');
 checkpointButton.textContent = 'Return to Checkpoint';
@@ -292,8 +295,8 @@ function toggleMenu() {
 }
 
 // Example functions for menu buttons
-function quitGame() {
-    alert('Quit Game');
+function restartGame() {
+    alert('Restart Game');
 }
 
 function returnToCheckpoint() {

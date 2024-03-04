@@ -1,59 +1,98 @@
 /* Styles CSS */
 body {
     background-color: #0a0a23;
-  }
+}
   
-  #text {
-    background-color: #0a0a23;
-    color: #ffffff;
-    padding: 10px;
-  }
-  
-  #cursor {
-    animation: blink 1s infinite;
-  }
-  
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
+#text {
+  background-color: #0a0a23;
+  color: #ffffff;
+  padding: 10px;
+}
 
-  .hide {
-    display: none;
-  }
+#cursor {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hide {
+  display: none;
+}
+
+#open-menu {
+  position: fixed;
+  top: 2px;
+  right: 2px
+}
+
+#menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #cdcdcd;
+  width: 90%;
+  height: 90vh;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+#menu-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the items */
+  align-items: center; /* Horizontally center the items */
+  height: 100%; /* Ensure the container takes up the full height */
+}
+
+#menu-content button {
+  font-size: min(1.8vw, 24px); /* Adjust the font size relative to the viewport width, but not exceeding 24px */
+  padding: min(1.5vw, 3.5vw) min(1vw, 2vw); /* Adjust the padding relative to the viewport width, but not exceeding 4vw horizontally and 2vw vertically */
+  margin: min(2vw, 1em) 0; /* Adjust the margin relative to the viewport width, but not exceeding 1em horizontally and 2vw vertically */
+  width: 200px;
+}
+
+#menu-content span {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
   
-  #game {
-    max-width: 500px;
-    max-height: 400px;
-    background-color: #ffffff;
-    color: #ffffff;
-    margin: 30px auto 0px;
-    padding: 10px;
-  }
-  
-  #controls,
-  #stats {
-    border: 1px solid #0a0a23;
-    padding: 5px;
-    color: #0a0a23;
-  }
-  
-  #monsterStats {
-    display: none;
-    border: 1px solid #0a0a23;
-    padding: 5px;
-    color: #ffffff;
-    background-color: #c70d0d;
-  }
-  
-  .stat {
-    padding-right: 10px;
-  }
-  
-  button {
-    cursor: pointer;
-    color: #0a0a23;
-    background-color: #feac32;
-    background-image: linear-gradient(#fecc4c, #ffac33);
-    border: 3px solid #feac32;
-  }
+#game {
+  max-width: 500px;
+  max-height: 400px;
+  background-color: #ffffff;
+  color: #ffffff;
+  margin: 30px auto 0px;
+  padding: 10px;
+}
+
+#controls,
+#stats {
+  border: 1px solid #0a0a23;
+  padding: 5px;
+  color: #0a0a23;
+}
+
+#monsterStats {
+  display: none;
+  border: 1px solid #0a0a23;
+  padding: 5px;
+  color: #ffffff;
+  background-color: #c70d0d;
+}
+
+.stat {
+  padding-right: 10px;
+}
+
+button {
+  cursor: pointer;
+  color: #0a0a23;
+  background-color: #feac32;
+  background-image: linear-gradient(#fecc4c, #ffac33);
+  border: 3px solid #feac32;
+}
