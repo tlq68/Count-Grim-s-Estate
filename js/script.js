@@ -168,14 +168,20 @@ function winGame() {
 }
 function saveGameState() {
     // Save relevant game data to local storage
-    localStorage.setItem('gameState', JSON.stringify({
-        xp: xp,
-        health: health,
-        gold: gold,
-        currentWeapon: currentWeapon,
-        inventory: inventory,
-        currentLocationIndex: choices[currentChoiceIndex].id
-    }));
+    try {
+        localStorage.setItem('gameState', JSON.stringify({
+            xp: xp,
+            health: health,
+            gold: gold,
+            currentWeapon: currentWeapon,
+            inventory: inventory,
+            currentLocationIndex: choices[currentChoiceIndex].id
+        }));
+    } catch (error) {
+        console.error('Error saving game state:', error);
+        // Optionally handle the error here, such as showing a user-friendly message
+    }
+    
 }
 
 function restart() {
@@ -216,7 +222,8 @@ function toggleMenuVisibility() {
     }
 }
 
-if (savedGameState) {
+try {
+    if (savedGameState) {
         // Load player stats, current location, etc.
         xp = savedGameState.xp || 0;
         health = savedGameState.health || 100;
@@ -225,6 +232,11 @@ if (savedGameState) {
         inventory = savedGameState.inventory || ["stick"];
         currentChoiceIndex = savedGameState.currentLocationIndex || 0;
     }
+} catch (error) {
+    console.error('Error initializing game from saved state:', error);
+    // Optionally handle the error here, such as showing a user-friendly message
+}
+
 
 (function() {
     const weapons = [
