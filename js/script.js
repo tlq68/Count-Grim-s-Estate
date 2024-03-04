@@ -206,6 +206,22 @@ function saveGameState() {
     } 
 }
 
+// Toggle menu function
+function toggleMenuVisibility() {
+    let menuContent;
+    try {
+       menuContent = document.getElementById('menu');
+    } catch (error) {
+        console.error('Error saving game state:', error);
+    }
+
+    if (menuContent.classList.contains('hide')) {
+        menuContent.classList.remove('hide');
+    } else {
+        menuContent.classList.add('hide');
+    }
+}
+
 // Resets game to initial state
 function restart() {
     const confirmRestart = window.confirm("Are you sure you want to restart the game?");
@@ -233,20 +249,13 @@ function restart() {
     }
 } 
 
-// Toggle menu function
-function toggleMenuVisibility() {
-    let menuContent;
-    try {
-       menuContent = document.getElementById('menu');
-    } catch (error) {
-        console.error('Error saving game state:', error);
-    }
+// Other functions for menu buttons
+function returnToCheckpoint() {
+    alert('Return to Checkpoint');
+}
 
-    if (menuContent.classList.contains('hide')) {
-        menuContent.classList.remove('hide');
-    } else {
-        menuContent.classList.add('hide');
-    }
+function showHint() {
+    alert('Show Hint');
 }
 
 // Load player stats, current location, etc.
@@ -340,14 +349,6 @@ try {
 
     // Append menu content div to the menu div
     menuDiv.appendChild(menuContentDiv);
-
-    function returnToCheckpoint() {
-        alert('Return to Checkpoint');
-    }
-
-    function showHint() {
-        alert('Show Hint');
-    }
   
     // Event listener for the escape key
     document.addEventListener('keydown', function(event) {
