@@ -194,8 +194,6 @@ const gameLogic = (function() {
         inventory,
         currentTextIndex,
         choices,
-        checkpoints,
-        hints,
         saveGameState,
         loadGameState,
         update,

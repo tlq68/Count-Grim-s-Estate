@@ -353,34 +353,34 @@ gameLogic.loadGameState();
     menuContentDiv.setAttribute('id', 'menu-content');
 
     // let openMenuButton;
-    try {
-      openMenuButton = document.getElementById('open-menu');
-    } catch (error) {
-        console.error('Error saving game state:', error);
-    }
+    // try {
+    //   openMenuButton = document.getElementById('open-menu');
+    // } catch (error) {
+    //     console.error('Error saving game state:', error);
+    // }
 
     openMenuButton.addEventListener('click', ui.toggleMenuVisibility);
 
     // Create buttons for the menu content
     // const restartButton = document.createElement('button');
-    restartButton.textContent = 'Restart Game';
+    // restartButton.textContent = 'Restart Game';
     restartButton.addEventListener('click', gameLogic.restart);
 
     // const checkpointButton = document.createElement('button');
-    checkpointButton.textContent = 'Return to Checkpoint';
+    // checkpointButton.textContent = 'Return to Checkpoint';
     checkpointButton.addEventListener('click', gameLogic.returnToCheckpoint);
 
     // const hintButton = document.createElement('button');
-    hintButton.textContent = 'Hint';
+    // hintButton.textContent = 'Hint';
     hintButton.addEventListener('click', gameLogic.showHint);
 
     // Append buttons to the menu content div
-    menuContentDiv.appendChild(restartButton);
-    menuContentDiv.appendChild(checkpointButton);
-    menuContentDiv.appendChild(hintButton);
+    // menuContentDiv.appendChild(restartButton);
+    // menuContentDiv.appendChild(checkpointButton);
+    // menuContentDiv.appendChild(hintButton);
 
     // Append menu content div to the menu div
-    menuDiv.appendChild(menuContentDiv);
+    // menuDiv.appendChild(menuContentDiv);
   
     // Event listener for the escape key
     document.addEventListener('keydown', function(event) {
