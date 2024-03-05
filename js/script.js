@@ -45,26 +45,25 @@ const {
     monsterHealthText
 } = ui.accessDOMElements();
 
-alert(xpText)
 // Array of objects containing the game choices
-const choices = [
-    {name: "start",id: 0,buttons: [{ text: "Go to store", func: goStore },{ text: "Enter the house", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You are in the town square. You see a sign that says Store."},
-    {name: "enter house",id: 1,buttons: [{ text: "Go back to store", func: goStore },{ text: "Enter next room", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You enter the house and are greeted."},
-    {name: "go cave",id: 2,buttons: [{ text: "Go back to the house", func: enterHouse },{ text: "Go further in the cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You are in a cave"},   
-    {name: "fighting dragon",id: 3,buttons: [{ text: "You are fighting a dragon", func: inFightWithDragon },{ text: "Give up", func: giveUp },{ text: "Just win", func: justWin }],text: "Behold the mighty dragon!!!"}
-];
+// const gameLogic.choices = [
+//     {name: "start",id: 0,buttons: [{ text: "Go to store", func: goStore },{ text: "Enter the house", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You are in the town square. You see a sign that says Store."},
+//     {name: "enter house",id: 1,buttons: [{ text: "Go back to store", func: goStore },{ text: "Enter next room", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You enter the house and are greeted."},
+//     {name: "go cave",id: 2,buttons: [{ text: "Go back to the house", func: enterHouse },{ text: "Go further in the cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You are in a cave"},   
+//     {name: "fighting dragon",id: 3,buttons: [{ text: "You are fighting a dragon", func: inFightWithDragon },{ text: "Give up", func: giveUp },{ text: "Just win", func: justWin }],text: "Behold the mighty dragon!!!"}
+// ];
 
 // Array of checkpoint objects
-const checkpoints = [
-    {name: "checkpoint 1",location: 0, inventory: {items: [], keyItems: []}}
-]
+// const gameLogic.checkpoints = [
+//     {name: "checkpoint 1",location: 0, inventory: {items: [], keyItems: []}}
+// ]
 
-const hints = [
-    {name: "hint 1", id:1, hint: "You need to make choices and get to the end."}
-]
+// const gameLogic.hints = [
+//     {name: "hint 1", id:1, hint: "You need to make choices and get to the end."}
+// ]
 
-let checkpoint = checkpoints[0];
-let hint = hints[0];
+let checkpoint = gameLogic.checkpoints[0];
+let hint = gameLogic.hints[0];
 
 // Types out text for the page
 // Delays rendering buttons until all words are typed out
@@ -158,25 +157,25 @@ let hint = hints[0];
 // THESE SHOULD BE COMBINED INTO ONE FUNCTION
 function goStore() {
     gameLogic.currentChoiceIndex = 0; // Update current location index
-    gameLogic.update(choices[gameLogic.currentChoiceIndex]);
+    gameLogic.update(gameLogic.choices[gameLogic.currentChoiceIndex]);
     gameLogic.saveGameState();
 }
 
 function enterHouse() {
     gameLogic.currentChoiceIndex = 1; // Update current location index
-    gameLogic.update(choices[gameLogic.currentChoiceIndex]);
+    gameLogic.update(gameLogic.choices[gameLogic.currentChoiceIndex]);
     gameLogic.saveGameState();
 }
 
 function goCave() {
     gameLogic.currentChoiceIndex = 2; // Update current location index
-    gameLogic.update(choices[gameLogic.currentChoiceIndex]);
+    gameLogic.update(gameLogic.choices[gameLogic.currentChoiceIndex]);
     gameLogic.saveGameState();
 }
 
 function fightDragon() {
     gameLogic.currentChoiceIndex = 3; // Update current location index
-    gameLogic.update(choices[gameLogic.currentChoiceIndex]);
+    gameLogic.update(gameLogic.choices[gameLogic.currentChoiceIndex]);
     gameLogic.saveGameState();
 }
 
@@ -193,7 +192,7 @@ function justWin() {
 }
 
 function goFight() {
-    gameLogic.update(choices[3]);
+    gameLogic.update(gameLogic.choices[3]);
     monsterHealth = monsters[fighting].health;
     monsterStats.style.display = "block";
     monsterName.innerText = monsters[fighting].name;
@@ -201,11 +200,11 @@ function goFight() {
 }
 
 function lose() {
-    gameLogic.update(choices[5]);
+    gameLogic.update(gameLogic.choices[5]);
 }
 
 function winGame() {
-    gameLogic.update(choices[6]);
+    gameLogic.update(gameLogic.choices[6]);
 }
     
 // // Save relevant game data to local storage
@@ -259,7 +258,7 @@ function restart() {
         goldText.innerText = gameLogic.gold;
         healthText.innerText = gameLogic.health;
         xpText.innerText = gameLogic.xp;
-        gameLogic.update(choices[gameLogic.currentChoiceIndex]);
+        gameLogic.update(gameLogic.choices[gameLogic.currentChoiceIndex]);
         alert('You restarted')
         toggleMenuVisibility();
     } else {
@@ -382,7 +381,7 @@ gameLogic.loadGameState();
     gameLogic.saveGameState();
 
     // Initial call for current choice information
-    gameLogic.update(choices[gameLogic.currentChoiceIndex]);
+    gameLogic.update(gameLogic.choices[gameLogic.currentChoiceIndex]);
 
     // Save game state when leaving the page
     window.addEventListener('beforeunload', gameLogic.saveGameState);
