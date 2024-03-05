@@ -168,7 +168,7 @@ const gameLogic = (function() {
             xpText.innerText = xp;
             update(choices[currentChoiceIndex]);
             alert('You restarted')
-            toggleMenuVisibility();
+            ui.toggleMenuVisibility();
         } else {
             // If the player cancels, do nothing
         }

@@ -240,31 +240,31 @@ function winGame() {
 // }
 
 // Resets game to initial state
-function restart() {
-    const confirmRestart = window.confirm("Are you sure you want to restart the game?");
+// function gameLogic.restart() {
+//     const confirmRestart = window.confirm("Are you sure you want to restart the game?");
 
-    // If the player confirms the restart
-    if (confirmRestart) {
-        // Perform the restart actions
-        gameLogic.xp = 0;
-        gameLogic.health = 100;
-        gameLogic.gold = 50;
-        gameLogic.currentWeapon = 0;
+//     // If the player confirms the restart
+//     if (confirmRestart) {
+//         // Perform the restart actions
+//         gameLogic.xp = 0;
+//         gameLogic.health = 100;
+//         gameLogic.gold = 50;
+//         gameLogic.currentWeapon = 0;
 
-        gameLogic.currentChoiceIndex = 0;
-        gameLogic.currentTextIndex = 0;
+//         gameLogic.currentChoiceIndex = 0;
+//         gameLogic.currentTextIndex = 0;
 
-        gameLogic.inventory = ["stick"];
-        goldText.innerText = gameLogic.gold;
-        healthText.innerText = gameLogic.health;
-        xpText.innerText = gameLogic.xp;
-        gameLogic.update(gameLogic.choices[gameLogic.currentChoiceIndex]);
-        alert('You restarted')
-        ui.toggleMenuVisibility();
-    } else {
-        // If the player cancels, do nothing
-    }
-} 
+//         gameLogic.inventory = ["stick"];
+//         goldText.innerText = gameLogic.gold;
+//         healthText.innerText = gameLogic.health;
+//         xpText.innerText = gameLogic.xp;
+//         gameLogic.update(gameLogic.choices[gameLogic.currentChoiceIndex]);
+//         alert('You restarted')
+//         ui.toggleMenuVisibility();
+//     } else {
+//         // If the player cancels, do nothing
+//     }
+// } 
 
 // Other functions for menu buttons
 function returnToCheckpoint() {
@@ -352,7 +352,7 @@ gameLogic.loadGameState();
     // Create buttons for the menu content
     const restartButton = document.createElement('button');
     restartButton.textContent = 'Restart Game';
-    restartButton.addEventListener('click', restart);
+    restartButton.addEventListener('click', gameLogic.restart);
 
     const checkpointButton = document.createElement('button');
     checkpointButton.textContent = 'Return to Checkpoint';
