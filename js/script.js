@@ -1,7 +1,7 @@
 /* script.js */
 
 import gameLogic from './gameLogic/gameLogic.js'
-import * as ui from './ui/ui.js'
+import ui from './ui/ui.js'
 import * as storage from './localStorageManager/localStorageManager.js'
 
 // Import everything from Act1.js
@@ -27,14 +27,25 @@ let monsterHealth;
 // Load game state from local storage if available
 const savedGameState = JSON.parse(localStorage.getItem('gameState'));
 console.log(savedGameState)
-// Define DOM elements
-const xpText = document.querySelector('#xpText');
-const healthText = document.querySelector('#healthText');
-const goldText = document.querySelector('#goldText');
-const monsterStats = document.querySelector('#monsterStats');
-const monsterName = document.querySelector('#monsterName');
-const monsterHealthText = document.querySelector('#monsterHealth');
 
+// Define DOM elements
+// const xpText = document.querySelector('#xpText');
+// const healthText = document.querySelector('#healthText');
+// const goldText = document.querySelector('#goldText');
+// const monsterStats = document.querySelector('#monsterStats');
+// const monsterName = document.querySelector('#monsterName');
+// const monsterHealthText = document.querySelector('#monsterHealth');
+
+const {
+    xpText,
+    healthText,
+    goldText,
+    monsterStats,
+    monsterName,
+    monsterHealthText
+} = ui.accessDOMElements();
+
+alert(xpText)
 // Array of objects containing the game choices
 const choices = [
     {name: "start",id: 0,buttons: [{ text: "Go to store", func: goStore },{ text: "Enter the house", func: enterHouse },{ text: "Go to cave", func: goCave },{ text: "Fight dragon", func: fightDragon }],text: "You are in the town square. You see a sign that says Store."},
