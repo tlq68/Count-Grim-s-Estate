@@ -63,8 +63,8 @@ const {
 //     {name: "hint 1", id:1, hint: "You need to make choices and get to the end."}
 // ]
 
-let checkpoint = gameLogic.checkpoints[0];
-let hint = gameLogic.hints[0];
+// let checkpoint = gameLogic.checkpoints[0];
+// let hint = gameLogic.hints[0];
 
 // Types out text for the page
 // Delays rendering buttons until all words are typed out
@@ -267,14 +267,14 @@ function winGame() {
 //     }
 // } 
 
-// Other functions for menu buttons
-function returnToCheckpoint() {
-    alert(checkpoint.name);
-}
+// // Other functions for menu buttons
+// function returnToCheckpoint() {
+//     alert(checkpoint.name);
+// }
 
-function showHint() {
-    alert(hint.hint);
-}
+// function showHint() {
+//     alert(hint.hint);
+// }
 
 // // Load player stats, current location, etc.
 // try {
@@ -368,11 +368,11 @@ gameLogic.loadGameState();
 
     // const checkpointButton = document.createElement('button');
     checkpointButton.textContent = 'Return to Checkpoint';
-    checkpointButton.addEventListener('click', returnToCheckpoint);
+    checkpointButton.addEventListener('click', gameLogic.returnToCheckpoint);
 
     // const hintButton = document.createElement('button');
     hintButton.textContent = 'Hint';
-    hintButton.addEventListener('click', showHint);
+    hintButton.addEventListener('click', gameLogic.showHint);
 
     // Append buttons to the menu content div
     menuContentDiv.appendChild(restartButton);

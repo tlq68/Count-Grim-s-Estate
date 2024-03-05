@@ -28,6 +28,8 @@ const gameLogic = (function() {
         {name: "hint 1", id:1, hint: "You need to make choices and get to the end."}
     ]
 
+    let checkpoint = checkpoints[0];
+    let hint = hints[0];
     // Various functions to update choice. 
     // THESE SHOULD BE COMBINED INTO ONE FUNCTION
     function goStore() {
@@ -174,6 +176,14 @@ const gameLogic = (function() {
         }
     } 
 
+    function returnToCheckpoint() {
+        alert(checkpoint.name);
+    }
+    
+    function showHint() {
+        alert(hint.hint);
+    }
+
     return {
         xp,
         health,
@@ -190,6 +200,8 @@ const gameLogic = (function() {
         loadGameState,
         update,
         restart,
+        returnToCheckpoint,
+        showHint
     };
 })();
 
