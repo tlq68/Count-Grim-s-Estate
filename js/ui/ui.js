@@ -81,10 +81,26 @@ const ui = (function () {
         typeNextCharacter();
     }
 
+    function toggleMenuVisibility() {
+        let menuContent;
+        try {
+           menuContent = document.getElementById('menu');
+        } catch (error) {
+            console.error('Error saving game state:', error);
+        }
+    
+        if (menuContent.classList.contains('hide')) {
+            menuContent.classList.remove('hide');
+        } else {
+            menuContent.classList.add('hide');
+        }
+    }
+
     return {
         typingSpeed,
         accessDOMElements,
-        typeText
+        typeText,
+        toggleMenuVisibility
     }
 })();
 

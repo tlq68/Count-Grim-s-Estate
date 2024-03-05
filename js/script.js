@@ -223,21 +223,21 @@ function winGame() {
 //     } 
 // }
 
-// Toggle menu function
-function toggleMenuVisibility() {
-    let menuContent;
-    try {
-       menuContent = document.getElementById('menu');
-    } catch (error) {
-        console.error('Error saving game state:', error);
-    }
+// // Toggle menu function
+// function ui.toggleMenuVisibility() {
+//     let menuContent;
+//     try {
+//        menuContent = document.getElementById('menu');
+//     } catch (error) {
+//         console.error('Error saving game state:', error);
+//     }
 
-    if (menuContent.classList.contains('hide')) {
-        menuContent.classList.remove('hide');
-    } else {
-        menuContent.classList.add('hide');
-    }
-}
+//     if (menuContent.classList.contains('hide')) {
+//         menuContent.classList.remove('hide');
+//     } else {
+//         menuContent.classList.add('hide');
+//     }
+// }
 
 // Resets game to initial state
 function restart() {
@@ -260,7 +260,7 @@ function restart() {
         xpText.innerText = gameLogic.xp;
         gameLogic.update(gameLogic.choices[gameLogic.currentChoiceIndex]);
         alert('You restarted')
-        toggleMenuVisibility();
+        ui.toggleMenuVisibility();
     } else {
         // If the player cancels, do nothing
     }
@@ -324,7 +324,7 @@ gameLogic.loadGameState();
     const menuButton = document.createElement('button');
     menuButton.setAttribute('id', 'menu-button');
     menuButton.textContent = 'Close Menu';
-    menuButton.addEventListener('click', toggleMenuVisibility);
+    menuButton.addEventListener('click', ui.toggleMenuVisibility);
 
     // Append menu button to the menu div
     let menuDiv;
@@ -347,7 +347,7 @@ gameLogic.loadGameState();
         console.error('Error saving game state:', error);
     }
 
-    openMenuButton.addEventListener('click', toggleMenuVisibility);
+    openMenuButton.addEventListener('click', ui.toggleMenuVisibility);
 
     // Create buttons for the menu content
     const restartButton = document.createElement('button');
@@ -373,7 +373,7 @@ gameLogic.loadGameState();
     // Event listener for the escape key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
-            toggleMenuVisibility();
+            ui.toggleMenuVisibility();
         }
     });
 
