@@ -1,3 +1,4 @@
+/* ui.js */
 const ui = (function () {
     const typingSpeed = 50;
 
@@ -8,7 +9,7 @@ const ui = (function () {
         const monsterStats = document.querySelector('#monsterStats');
         const monsterName = document.querySelector('#monsterName');
         const monsterHealthText = document.querySelector('#monsterHealth');
-    
+
         // Return an object containing all the accessed DOM elements
         return {
             xpText,
@@ -18,6 +19,68 @@ const ui = (function () {
             monsterName,
             monsterHealthText
         };
+    }
+
+    function createMenu() {
+        // Create menu button
+        const menuButton = document.createElement('button');
+        menuButton.setAttribute('id', 'menu-button');
+        menuButton.textContent = 'Close Menu';
+        menuButton.addEventListener('click', toggleMenuVisibility);
+        
+        // Append menu button to the menu div
+        let menuDiv;
+        try {
+        menuDiv = document.getElementById('menu-content');
+        } catch (error) {
+            console.error('Error saving game state:', error);
+        }
+
+        menuDiv.appendChild(menuButton);
+
+        // Create menu content div
+        const menuContentDiv = document.createElement('div');
+        menuContentDiv.setAttribute('id', 'menu-content');
+
+        let openMenuButton;
+        try {
+        openMenuButton = document.getElementById('open-menu');
+        } catch (error) {
+            console.error('Error saving game state:', error);
+        }
+
+        openMenuButton.addEventListener('click', ui.toggleMenuVisibility);
+
+        // Create buttons for the menu content
+        const restartButton = document.createElement('button');
+        restartButton.textContent = 'Restart Game';
+        // restartButton.addEventListener('click', gameLogic.restart);
+
+        const checkpointButton = document.createElement('button');
+        checkpointButton.textContent = 'Return to Checkpoint';
+        // checkpointButton.addEventListener('click', returnToCheckpoint);
+
+        const hintButton = document.createElement('button');
+        hintButton.textContent = 'Hint';
+        // hintButton.addEventListener('click', showHint);
+
+        // Append buttons to the menu content div
+        menuContentDiv.appendChild(restartButton);
+        menuContentDiv.appendChild(checkpointButton);
+        menuContentDiv.appendChild(hintButton);
+
+        // Append menu content div to the menu div
+        menuDiv.appendChild(menuContentDiv);
+
+        return {
+            menuButton,
+            menuDiv,
+            menuContentDiv,
+            openMenuButton,
+            restartButton,
+            checkpointButton,
+            hintButton
+        }
     }
     
     function typeText(text, gameLogicChoice, gameLogicCurrentTextIndex) {
@@ -96,9 +159,64 @@ const ui = (function () {
         }
     }
 
+    
+    // menuButton.addEventListener('click', toggleMenuVisibility);
+
+    // // Append menu button to the menu div
+    // let menuDiv;
+    // try {
+    //    menuDiv = document.getElementById('menu-content');
+    // } catch (error) {
+    //     console.error('Error saving game state:', error);
+    // }
+
+    // menuDiv.appendChild(menuButton);
+
+    // // Create menu content div
+    // const menuContentDiv = document.createElement('div');
+    // menuContentDiv.setAttribute('id', 'menu-content');
+
+    // let openMenuButton;
+    // try {
+    //   openMenuButton = document.getElementById('open-menu');
+    // } catch (error) {
+    //     console.error('Error saving game state:', error);
+    // }
+
+    // openMenuButton.addEventListener('click', toggleMenuVisibility);
+
+    // // Create buttons for the menu content
+    // const restartButton = document.createElement('button');
+    // restartButton.textContent = 'Restart Game';
+    // restartButton.addEventListener('click', gameLogic.restart);
+
+    // const checkpointButton = document.createElement('button');
+    // checkpointButton.textContent = 'Return to Checkpoint';
+    // checkpointButton.addEventListener('click', returnToCheckpoint);
+
+    // const hintButton = document.createElement('button');
+    // hintButton.textContent = 'Hint';
+    // hintButton.addEventListener('click', showHint);
+
+    // // Append buttons to the menu content div
+    // menuContentDiv.appendChild(restartButton);
+    // menuContentDiv.appendChild(checkpointButton);
+    // menuContentDiv.appendChild(hintButton);
+
+    // // Append menu content div to the menu div
+    // menuDiv.appendChild(menuContentDiv);
+  
+    // // Event listener for the escape key
+    // document.addEventListener('keydown', function(event) {
+    //     if (event.key === 'Escape') {
+    //         toggleMenuVisibility();
+    //     }
+    // });
+
     return {
         typingSpeed,
         accessDOMElements,
+        createMenu,
         typeText,
         toggleMenuVisibility
     }

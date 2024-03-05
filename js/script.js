@@ -42,7 +42,8 @@ const {
     goldText,
     monsterStats,
     monsterName,
-    monsterHealthText
+    monsterHealthText,
+    menuButton
 } = ui.accessDOMElements();
 
 // Array of objects containing the game choices
@@ -321,26 +322,37 @@ gameLogic.loadGameState();
     ];
 
     // Create menu button
-    const menuButton = document.createElement('button');
-    menuButton.setAttribute('id', 'menu-button');
-    menuButton.textContent = 'Close Menu';
-    menuButton.addEventListener('click', ui.toggleMenuVisibility);
+    // const menuButton = document.createElement('button');
+    // menuButton.setAttribute('id', 'menu-button');
+    // menuButton.textContent = 'Close Menu';
+    //menuButton.addEventListener('click', ui.toggleMenuVisibility);
 
     // Append menu button to the menu div
-    let menuDiv;
-    try {
-       menuDiv = document.getElementById('menu-content');
-    } catch (error) {
-        console.error('Error saving game state:', error);
-    }
+    // let menuDiv;
+    // try {
+    //    menuDiv = document.getElementById('menu-content');
+    // } catch (error) {
+    //     console.error('Error saving game state:', error);
+    // }
 
-    menuDiv.appendChild(menuButton);
+    // menuDiv.appendChild(menuButton);
 
     // Create menu content div
-    const menuContentDiv = document.createElement('div');
+
+    let {
+        menuButton,
+        menuDiv,
+        menuContentDiv,
+        openMenuButton,
+        restartButton,
+        checkpointButton,
+        hintButton
+    } = ui.createMenu();
+    
+    // const menuContentDiv = document.createElement('div');
     menuContentDiv.setAttribute('id', 'menu-content');
 
-    let openMenuButton;
+    // let openMenuButton;
     try {
       openMenuButton = document.getElementById('open-menu');
     } catch (error) {
@@ -350,15 +362,15 @@ gameLogic.loadGameState();
     openMenuButton.addEventListener('click', ui.toggleMenuVisibility);
 
     // Create buttons for the menu content
-    const restartButton = document.createElement('button');
+    // const restartButton = document.createElement('button');
     restartButton.textContent = 'Restart Game';
     restartButton.addEventListener('click', gameLogic.restart);
 
-    const checkpointButton = document.createElement('button');
+    // const checkpointButton = document.createElement('button');
     checkpointButton.textContent = 'Return to Checkpoint';
     checkpointButton.addEventListener('click', returnToCheckpoint);
 
-    const hintButton = document.createElement('button');
+    // const hintButton = document.createElement('button');
     hintButton.textContent = 'Hint';
     hintButton.addEventListener('click', showHint);
 
