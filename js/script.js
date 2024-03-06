@@ -2,10 +2,10 @@
 
 import gameLogic from './gameLogic/gameLogic.js'
 import ui from './ui/ui.js'
-import * as storage from './localStorageManager/localStorageManager.js'
+import storage from './localStorageManager/localStorageManager.js'
 
 // Import everything from Act1.js
-import * as act1 from './acts/act1.js';
+import act1 from './acts/act1.js';
 
 // Import everything from Act2.js
 import * as act2 from './acts/act2.js';
@@ -19,10 +19,15 @@ import * as act4 from './acts/act4.js';
 // Import everything from Act5.js
 import * as act5 from './acts/act5.js';
 
-gameLogic.loadGameState();
-
+storage.loadGameState();
 // IIFE containing game logic
 (function() {
+    let {
+        choices,
+        currentChoiceIndex
+    } = act1.getStats();
+
+    console.log(storage.savedGameState)
     // Will be changed to items later
     const weapons = [
         { name: 'stick', power: 5 },
@@ -61,12 +66,13 @@ gameLogic.loadGameState();
     hintButton.addEventListener('click', gameLogic.showHint);
 
     // Save the game State
-    gameLogic.saveGameState();
+    storage.saveGameState();
 
     // Initial call for current choice information
-    gameLogic.update(gameLogic.choices[gameLogic.currentChoiceIndex]);
+    gameLogic.update(choices[currentChoiceIndex]);
 
+    alert(storage.savedGameState.currentChoiceIndex)
     // Save game state when leaving the page
-    window.addEventListener('beforeunload', gameLogic.saveGameState);
+    window.addEventListener('beforeunload', storage.saveGameState);
 
 })();
