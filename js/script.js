@@ -71,7 +71,6 @@ storage.loadGameState();
     // Initial call for current choice information
     gameLogic.update(choices[currentChoiceIndex]);
 
-    alert(storage.savedGameState.currentChoiceIndex)
     // Save game state when leaving the page
     window.addEventListener('beforeunload', storage.saveGameState);
 

@@ -3,6 +3,7 @@ import storage from "../localStorageManager/localStorageManager.js";
 
 const gameLogic = (function() {
     let currentTextIndex = 0;
+
     function goFight() {
         update(choices[3]);
         monsterHealth = monsters[fighting].health;
@@ -59,7 +60,6 @@ const gameLogic = (function() {
     // Updates information to be displayed
     function update(choice) {
         currentTextIndex = 0;
-        let currentChoiceIndex = choice.id;
         console.log(choice.id)
         let textElement;
         try {
