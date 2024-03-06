@@ -1,4 +1,4 @@
-import gameLogic from "../gameLogic/gameLogic.js";
+import gameLogic from "../gameLogic.js";
 
 const act1 = (function() {
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
