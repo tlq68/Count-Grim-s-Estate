@@ -4,40 +4,6 @@ import storage from "../localStorageManager/localStorageManager.js";
 const gameLogic = (function() {
     let currentTextIndex = 0;
 
-    function goFight() {
-        update(choices[3]);
-        monsterHealth = monsters[fighting].health;
-        monsterStats.style.display = "block";
-        monsterName.innerText = monsters[fighting].name;
-        monsterHealthText.innerText = monsterHealth;
-    }
-
-    function lose() {
-        update(choices[5]);
-    }
-
-    function winGame() {
-        update(choices[6]);
-    }
-
-    // Save relevant game data to local storage
-    function saveGameState() {
-        try {
-            console.log('in save')
-            localStorage.setItem('gameState', JSON.stringify({
-                xp: xp,
-                health: health,
-                gold: gold,
-                currentWeapon: currentWeapon,
-                inventory: inventory,
-                currentLocationIndex: choices[currentChoiceIndex].id,
-                currentChoiceIndex: currentChoiceIndex
-            }));
-        } catch (error) {
-            console.error('Error saving game state:', error);
-        } 
-    }
-
     // Updates information to be displayed
     function update(choice) {
         currentTextIndex = 0;
