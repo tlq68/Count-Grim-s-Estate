@@ -1,4 +1,4 @@
-import act1 from "../acts/act1.js";
+import act1 from "../gameLogic/acts/act1.js";
 
 const storage = (function() {
     let xp = 10;

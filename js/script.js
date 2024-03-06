@@ -5,7 +5,7 @@ import ui from './ui/ui.js'
 import storage from './localStorageManager/localStorageManager.js'
 
 // Import everything from Act1.js
-import act1 from './acts/act1.js';
+import act1 from './gameLogic/acts/act1.js';
 
 // Import everything from Act2.js
 import * as act2 from './acts/act2.js';
