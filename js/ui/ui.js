@@ -1,6 +1,7 @@
 /* ui.js */
 const ui = (function () {
-    const typingSpeed = 50;
+    // typingSpeed will be adjusted for dynamic effects later
+    let typingSpeed = 50;
 
     function accessDOMElements() {
         const xpText = document.querySelector('#xpText');
@@ -84,50 +85,39 @@ const ui = (function () {
             hintButton
         }
     }
-    
-    function typeText(text, gameLogicChoice, gameLogicCurrentTextIndex) {
-        // Declare variables for DOM elements
+     // Function to access DOM elements
+    function accessTextDOMElements() {
         let textElement, buttonsContainer;
-    
         try {
-            // Attempt to access DOM elements
             textElement = document.getElementById('text');
             buttonsContainer = document.getElementById('controls');
         } catch (error) {
             console.error('Error accessing DOM elements:', error);
         }
-        
-        // Function to render buttons dynamically
-        function renderButtons(choice) {
-            let buttonsContainer;
-            try {
-               buttonsContainer = document.getElementById('controls');
-            }
-            catch (error) {
-                console.error('Error accessing DOM elements:', error);
-            }
-            buttonsContainer.innerHTML = ''; // Clear previous buttons
-    
-            // Hide buttons before rendering
-            buttonsContainer.classList.add('hide');
-    
-            // Creates a button for each button in current choice list
-            choice.buttons.forEach((buttonData, index) => {
-                const choiceButton = document.createElement('button');
-                choiceButton.innerText = buttonData.text;
-                choiceButton.onclick = buttonData.func;
-                choiceButton.id = `button${index + 1}`; // Set button id
-                buttonsContainer.appendChild(choiceButton);
-                (choiceButton.id)
-            });
-    
-            // Show buttons after typing animation is complete
-            setTimeout(() => {
-                buttonsContainer.classList.remove('hide');
-            }, choice.text.length); // Adjust timing based on starting text length and typing speed
-        }
-    
-        // Points to next letter
+        return { textElement, buttonsContainer };
+    }
+
+    // Function to render buttons dynamically
+    function renderButtons(choice) {
+        const buttonsContainer = document.getElementById('controls');
+        buttonsContainer.innerHTML = ''; // Clear previous buttons
+        buttonsContainer.classList.add('hide'); // Hide buttons before rendering
+
+        choice.buttons.forEach((buttonData, index) => {
+            const choiceButton = document.createElement('button');
+            choiceButton.innerText = buttonData.text;
+            choiceButton.onclick = buttonData.func;
+            choiceButton.id = `button${index + 1}`; // Set button id
+            buttonsContainer.appendChild(choiceButton);
+        });
+
+        setTimeout(() => {
+            buttonsContainer.classList.remove('hide'); // Show buttons after typing animation is complete
+        }, choice.text.length); // Adjust timing based on starting text length and typing speed
+    }
+
+    // Function to handle typing animation
+    function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice) {
         function typeNextCharacter() {
             textElement.textContent += text[gameLogicCurrentTextIndex];
             gameLogicCurrentTextIndex++;
@@ -135,15 +125,20 @@ const ui = (function () {
                 setTimeout(typeNextCharacter, typingSpeed);
             } else {
                 // Animation complete, render buttons
-                renderButtons(gameLogicChoice);
+                renderButtons(choice);
             }
         }
-    
-        // Hide buttons before starting the typing animation
-        buttonsContainer.classList.add('hide');
-    
+
         // Start typing animation
         typeNextCharacter();
+    }
+
+    // Main function to handle typing animation, rendering buttons, and accessing DOM elements
+    function typeText(text, gameLogicChoice, gameLogicCurrentTextIndex) {
+        const { textElement, buttonsContainer } = accessTextDOMElements();
+        if (!textElement || !buttonsContainer) return; // Check if DOM elements are accessible
+        buttonsContainer.classList.add('hide'); // Hide buttons before starting the typing animation
+        typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, gameLogicChoice);
     }
 
     function toggleMenuVisibility() {
