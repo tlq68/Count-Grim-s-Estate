@@ -38,25 +38,6 @@ const gameLogic = (function() {
         } 
     }
 
-    // function loadGameState() {
-    //     // Load player stats, current location, etc.
-    //     try {
-    //         if (savedGameState) {
-    //             console.log('in load')
-    //             xp = savedGameState.xp || 0;
-    //             health = savedGameState.health || 100;
-    //             gold = savedGameState.gold || 50;
-    //             currentWeapon = savedGameState.currentWeapon || 0;
-    //             inventory = savedGameState.inventory || ["stick"];
-    //             //currentChoiceIndex = savedGameState.currentLocationIndex || 0;
-    //             gameLogic.currentChoiceIndex = savedGameState.currentChoiceIndex || 0;
-    //             console.log(gameLogic.currentChoiceIndex)
-    //         }
-    //     } catch (error) {
-    //         console.error('Error initializing game from saved state:', error);
-    //     }
-    // }
-
     // Updates information to be displayed
     function update(choice) {
         currentTextIndex = 0;
