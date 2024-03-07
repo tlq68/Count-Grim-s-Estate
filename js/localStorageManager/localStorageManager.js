@@ -3,6 +3,7 @@ import act2 from "../gameLogic/acts/act2.js";
 import act3 from "../gameLogic/acts/act3.js";
 import act4 from "../gameLogic/acts/act4.js";
 import act5 from "../gameLogic/acts/act5.js";
+import ui from "../ui/ui.js";
 
 const storage = (function() {
     let xp = 10;
@@ -11,16 +12,36 @@ const storage = (function() {
     let currentWeapon = 0;
     let inventory = ['stick'];
     let currentChoiceIndex = 0;
-    // Change this logic to be housed in ui.
     let currentTextIndex = 0;
-    let currentAct = 1;
+    let currentAct = 1; // Default to Act 1
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
+    
+    getStats();
 
-        
-    const allChoices = [[...act1.getStats().choices], [...act2.getStats().choices]]
-    let actNum = 1;
+    function getChoicesForCurrentAct() {
+        console.log('in switch')
+        console.log(currentAct)
+        switch (currentAct) {
+            case 1:
+                console.log('Act 1 choices')
+                return act1.getStats().choices;
+            case 2:
+                console.log('Act 2 choices')
+                return act2.getStats().choices;
+            case 3:
+                return act3.getStats().choices;
+            case 4:
+                return act4.getStats().choices;
+            case 5:
+                return act5.getStats().choices;
+            default:
+                return [];
+        }
+    }
 
     function getStats() {
+        console.log('In getStats')
+        console.log(currentAct)
         return {
             xp,
             health,
@@ -29,70 +50,110 @@ const storage = (function() {
             inventory,
             currentChoiceIndex,
             currentTextIndex,
-            currentAct
-        }
+            currentAct,
+            choices: getChoicesForCurrentAct()
+        };
     }
-    // Save relevant game data to local storage
+
     function saveGameState() {
-        let currentActData = savedGameState.currentAct;
-            let {
+        let {
+            xp,
+            health,
+            gold,
+            currentWeapon,
+            inventory,
+            currentChoiceIndex,
+            currentTextIndex,
+            currentAct,
+            choices
+        } = getStats();
+
+        try {
+            console.log('IN save game')
+            console.log(currentAct)
+            localStorage.setItem('gameState', JSON.stringify({
                 xp,
                 health,
                 gold,
                 currentWeapon,
                 inventory,
                 currentChoiceIndex,
-                choices,
-                currentAct
-        } = act1.getStats();
-
-        console.log(choices[currentChoiceIndex])
-        try {
-            console.log('in save')
-            console.log(`Current Choice Index: ${currentChoiceIndex}`)
-            localStorage.setItem('gameState', JSON.stringify({
-                xp: xp,
-                health: health,
-                gold: gold,
-                currentWeapon: currentWeapon,
-                inventory: inventory,
-                currentLocationIndex: choices[currentChoiceIndex].id,
-                currentChoiceIndex: currentChoiceIndex,
-                currentAct: currentAct
+                currentAct,
+                choices
             }));
+            console.log('currentAct')
+            console.log(currentAct)
         } catch (error) {
             console.error('Error saving game state:', error);
-        } 
+        }
     }
 
     function loadGameState() {
-        // Load player stats, current location, etc.
+        console.log('In loadgame')
+        console.log(currentAct)
         try {
-            console.log(`In Load`)
-            console.log(`Current Choice Index: ${savedGameState.currentChoiceIndex}`)
-            console.log(savedGameState)
             if (savedGameState) {
-                console.log('in load')
                 xp = savedGameState.xp || 0;
                 health = savedGameState.health || 100;
                 gold = savedGameState.gold || 50;
                 currentWeapon = savedGameState.currentWeapon || 0;
-                inventory = savedGameState.inventory || ["stick"];
+                inventory = savedGameState.inventory || ['stick'];
                 currentChoiceIndex = savedGameState.currentChoiceIndex || 0;
-                currentAct = savedGameState.currentAct || 1;
-                console.log(act1.currentChoiceIndex)
+                currentAct = savedGameState.currentAct || 1; // Default to Act 1 if not found
             }
         } catch (error) {
             console.error('Error initializing game from saved state:', error);
         }
     }
 
+    // Resets game to initial state
+    function restartGame() {
+        const confirmRestart = window.confirm("Are you sure you want to restart the game?");
+        let {
+            xp,
+            health,
+            gold,
+            currentWeapon,
+            currentChoiceIndex,
+            currentTextIndex,
+            inventory,
+            choices,
+            currentAct
+        } = getStats();
+
+        // If the player confirms the restart
+        if (confirmRestart) {
+            // Perform the restart actions
+            xp = 0;
+            health = 100;
+            gold = 50;
+            currentWeapon = 0;
+
+            currentChoiceIndex = 0;
+            currentTextIndex = 0;
+            currentAct = 1;
+
+            inventory = ["stick"];
+            goldText.innerText = gold;
+            healthText.innerText = health;
+            xpText.innerText = xp;
+            ui.update(choices[currentChoiceIndex]);
+            alert('You restarted')
+            ui.toggleMenuVisibility();
+        } else {
+            // If the player cancels, do nothing
+        }
+
+        saveGameState();
+    } 
+
     return {
         savedGameState,
         getStats,
         saveGameState,
-        loadGameState
-    }
+        loadGameState,
+        restartGame
+    };
 })();
 
 export default storage;

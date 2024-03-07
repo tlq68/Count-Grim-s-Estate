@@ -20,14 +20,14 @@ import * as act4 from './gameLogic/acts/act4.js';
 import * as act5 from './gameLogic/acts/act5.js';
 
 storage.loadGameState();
+
 // IIFE containing game logic
 (function() {
     let {
         choices,
         currentChoiceIndex
-    } = act1.getStats();
+    } = storage.getStats();
 
-    console.log(storage.savedGameState)
     // Will be changed to items later
     const weapons = [
         { name: 'stick', power: 5 },
@@ -61,15 +61,12 @@ storage.loadGameState();
     } = ui.createMenu();
 
     // Event listeners located here for convenience
-    restartButton.addEventListener('click', gameLogic.restart);
+    restartButton.addEventListener('click', storage.restartGame);
     checkpointButton.addEventListener('click', gameLogic.returnToCheckpoint);
     hintButton.addEventListener('click', gameLogic.showHint);
 
-    // Save the game State
-    storage.saveGameState();
-
     // Initial call for current choice information
-    gameLogic.update(choices[currentChoiceIndex]);
+    ui.update(choices[currentChoiceIndex]);
 
     // Save game state when leaving the page
     window.addEventListener('beforeunload', storage.saveGameState);

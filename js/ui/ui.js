@@ -2,7 +2,8 @@
 const ui = (function () {
     // typingSpeed will be adjusted for dynamic effects later
     let typingSpeed = 50;
-
+    let currentTextIndex = 0;
+    
     function accessDOMElements() {
         const xpText = document.querySelector('#xpText');
         const healthText = document.querySelector('#healthText');
@@ -156,6 +157,33 @@ const ui = (function () {
         }
     }
 
+    function update(choice) {
+        currentTextIndex = 0;
+        console.log(choice.id)
+        let textElement;
+        try {
+            textElement = document.getElementById('text');
+        } catch (error) {
+            console.error('Error accessing DOM elements:', error);
+        }
+        textElement.textContent = ''; // Reset text content
+        // Move this to ui update
+        ui.typeText(choice.text, choice, currentTextIndex);
+        monsterStats.style.display = "none";
+
+        // Loop through all buttons in the location
+        for (let i = 0; i < choice.buttons.length; i++) {
+            const buttonData = choice.buttons[i];
+            const button = document.querySelector(`#button${i + 1}`); // Select button by ID
+            if (button) {
+                // Update button text and function
+                button.innerText = buttonData.text;
+                button.onclick = buttonData.func;
+            }
+        }
+        
+    }
+
     // Event listener for the escape key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
@@ -168,7 +196,8 @@ const ui = (function () {
         accessDOMElements,
         createMenu,
         typeText,
-        toggleMenuVisibility
+        toggleMenuVisibility,
+        update
     }
 })();
 

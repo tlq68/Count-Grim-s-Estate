@@ -1,5 +1,6 @@
 import gameLogic from "../gameLogic.js";
-
+import ui
+ from "../../ui/ui.js";
 const act2 = (function() {
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
     let currentChoiceIndex = savedGameState.currentChoiceIndex;
@@ -35,7 +36,7 @@ const act2 = (function() {
    
     function handleChoice(choiceIndex) {
         currentChoiceIndex = choiceIndex;
-        gameLogic.update(choices[currentChoiceIndex]);
+        ui.update(choices[currentChoiceIndex]);
     }
 
     function inFightWithDragon() {
