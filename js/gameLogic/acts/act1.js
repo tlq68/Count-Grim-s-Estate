@@ -50,11 +50,13 @@ const act1 = (function() {
         alert("You literally just win")
     }
 
+    const actTest = 'act 1 here'
     return {
         getStats,
         inFightWithDragon,
         giveUp,
-        justWin
+        justWin,
+        actTest
     }
 })();
 

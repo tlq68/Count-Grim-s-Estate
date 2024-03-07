@@ -8,7 +8,7 @@ import storage from './localStorageManager/localStorageManager.js'
 import act1 from './gameLogic/acts/act1.js';
 
 // Import everything from Act2.js
-import * as act2 from './gameLogic/acts/act2.js';
+import act2 from './gameLogic/acts/act2.js';
 
 // Import everything from Act3.js
 import * as act3 from './gameLogic/acts/act3.js';
@@ -19,6 +19,10 @@ import * as act4 from './gameLogic/acts/act4.js';
 // Import everything from Act5.js
 import * as act5 from './gameLogic/acts/act5.js';
 
+const actNum = 2;
+
+console.log(`act${actNum}.actTest`)
+console.log(act2.actTest)
 storage.loadGameState();
 // IIFE containing game logic
 (function() {
