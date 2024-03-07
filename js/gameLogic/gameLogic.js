@@ -1,8 +1,12 @@
 import ui from "../ui/ui.js";
 import storage from "../localStorageManager/localStorageManager.js";
-
+function testingMocha() {
+    return 'test'
+}
 const gameLogic = (function() {
     let currentTextIndex = 0;
+
+   
 
     // Updates information to be displayed
     function update(choice) {
@@ -68,6 +72,7 @@ const gameLogic = (function() {
     }
 
     return {
+        testingMocha,
         update,
         restart,
         returnToCheckpoint,
