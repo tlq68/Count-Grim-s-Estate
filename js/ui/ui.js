@@ -3,7 +3,7 @@ const ui = (function () {
     // typingSpeed will be adjusted for dynamic effects later
     let typingSpeed = 50;
     let currentTextIndex = 0;
-    
+
     function accessDOMElements() {
         const xpText = document.querySelector('#xpText');
         const healthText = document.querySelector('#healthText');
@@ -181,7 +181,6 @@ const ui = (function () {
                 button.onclick = buttonData.func;
             }
         }
-        
     }
 
     // Event listener for the escape key

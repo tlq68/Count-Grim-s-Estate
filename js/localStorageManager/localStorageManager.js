@@ -6,6 +6,8 @@ import act5 from "../gameLogic/acts/act5.js";
 import ui from "../ui/ui.js";
 
 const storage = (function() {
+    const savedGameState = JSON.parse(localStorage.getItem('gameState'));
+    
     let xp = 10;
     let health = 100;
     let gold = 50;
@@ -13,27 +15,26 @@ const storage = (function() {
     let inventory = ['stick'];
     let currentChoiceIndex = 0;
     let currentTextIndex = 0;
-    let currentAct = 1; // Default to Act 1
-    const savedGameState = JSON.parse(localStorage.getItem('gameState'));
-    
+    let currentAct = 2; // Default to Act 1
+
     getStats();
 
-    function getChoicesForCurrentAct() {
+    function getCurrentActStats() {
         console.log('in switch')
         console.log(currentAct)
         switch (currentAct) {
             case 1:
                 console.log('Act 1 choices')
-                return act1.getStats().choices;
+                return act1.getStats();
             case 2:
                 console.log('Act 2 choices')
-                return act2.getStats().choices;
+                return act2.getStats();
             case 3:
-                return act3.getStats().choices;
+                return act3.getStats();
             case 4:
-                return act4.getStats().choices;
+                return act4.getStats();
             case 5:
-                return act5.getStats().choices;
+                return act5.getStats();
             default:
                 return [];
         }
@@ -48,14 +49,16 @@ const storage = (function() {
             gold,
             currentWeapon,
             inventory,
-            currentChoiceIndex,
+            currentChoiceIndex: getCurrentActStats().currentChoiceIndex,
             currentTextIndex,
-            currentAct,
-            choices: getChoicesForCurrentAct()
+            currentAct: getCurrentActStats().currentAct,
+            choices: getCurrentActStats().choices
         };
     }
 
     function saveGameState() {
+
+        // WE NEED TO USE THE GET CURRENT ACT GETSTATS HERE
         let {
             xp,
             health,
@@ -109,17 +112,19 @@ const storage = (function() {
     // Resets game to initial state
     function restartGame() {
         const confirmRestart = window.confirm("Are you sure you want to restart the game?");
-        let {
-            xp,
-            health,
-            gold,
-            currentWeapon,
-            currentChoiceIndex,
-            currentTextIndex,
-            inventory,
-            choices,
-            currentAct
-        } = getStats();
+        // let {
+        //     xp,
+        //     health,
+        //     gold,
+        //     currentWeapon,
+        //     currentChoiceIndex,
+        //     currentTextIndex,
+        //     inventory,
+        //     choices,
+        //     currentAct
+        // } = getStats();
+
+        let choices = getCurrentActStats().choices;
 
         // If the player confirms the restart
         if (confirmRestart) {
@@ -137,6 +142,8 @@ const storage = (function() {
             goldText.innerText = gold;
             healthText.innerText = health;
             xpText.innerText = xp;
+            choices = getCurrentActStats().choices;
+
             ui.update(choices[currentChoiceIndex]);
             alert('You restarted')
             ui.toggleMenuVisibility();

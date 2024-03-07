@@ -1,9 +1,10 @@
 import gameLogic from "../gameLogic.js";
 import ui from "../../ui/ui.js";
+
 const act1 = (function() {
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
     let currentChoiceIndex = savedGameState.currentChoiceIndex;
-    
+    const currentAct = 1;
     // Array of objects containing the game choices
     const choices = [
         {name: "start", id: 0,buttons: [{ text: "Go to store", func: () => handleChoice(0) },{ text: "Enter the house", func: () => handleChoice(1) },{ text: "Go to cave", func: () => handleChoice(2) },{ text: "Fight dragon", func: () => handleChoice(3) }],text: "You are in the town square. You see a sign that says Store."},
@@ -23,6 +24,7 @@ const act1 = (function() {
 
     function getStats() {
         return {
+            currentAct,
             currentChoiceIndex,
             choices,
             checkpoints,
@@ -30,8 +32,7 @@ const act1 = (function() {
         }
     }
 
-        // Various functions to update choice. 
-    // THESE SHOULD BE COMBINED INTO ONE FUNCTION
+    // Various functions to update choice. 
    
     function handleChoice(choiceIndex) {
         currentChoiceIndex = choiceIndex;
