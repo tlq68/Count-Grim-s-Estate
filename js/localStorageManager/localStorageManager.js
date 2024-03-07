@@ -1,4 +1,8 @@
 import act1 from "../gameLogic/acts/act1.js";
+import act2 from "../gameLogic/acts/act2.js";
+import act3 from "../gameLogic/acts/act3.js";
+import act4 from "../gameLogic/acts/act4.js";
+import act5 from "../gameLogic/acts/act5.js";
 
 const storage = (function() {
     let xp = 10;
@@ -9,7 +13,12 @@ const storage = (function() {
     let currentChoiceIndex = 0;
     // Change this logic to be housed in ui.
     let currentTextIndex = 0;
+    let currentAct = 1;
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
+
+        
+    const allChoices = [[...act1.getStats().choices], [...act2.getStats().choices]]
+    let actNum = 1;
 
     function getStats() {
         return {
@@ -20,10 +29,12 @@ const storage = (function() {
             inventory,
             currentChoiceIndex,
             currentTextIndex,
+            currentAct
         }
     }
     // Save relevant game data to local storage
     function saveGameState() {
+        let currentActData = savedGameState.currentAct;
             let {
                 xp,
                 health,
@@ -32,6 +43,7 @@ const storage = (function() {
                 inventory,
                 currentChoiceIndex,
                 choices,
+                currentAct
         } = act1.getStats();
 
         console.log(choices[currentChoiceIndex])
@@ -45,7 +57,8 @@ const storage = (function() {
                 currentWeapon: currentWeapon,
                 inventory: inventory,
                 currentLocationIndex: choices[currentChoiceIndex].id,
-                currentChoiceIndex: currentChoiceIndex
+                currentChoiceIndex: currentChoiceIndex,
+                currentAct: currentAct
             }));
         } catch (error) {
             console.error('Error saving game state:', error);
@@ -65,8 +78,8 @@ const storage = (function() {
                 gold = savedGameState.gold || 50;
                 currentWeapon = savedGameState.currentWeapon || 0;
                 inventory = savedGameState.inventory || ["stick"];
-                //currentChoiceIndex = savedGameState.currentLocationIndex || 0;
                 currentChoiceIndex = savedGameState.currentChoiceIndex || 0;
+                currentAct = savedGameState.currentAct || 1;
                 console.log(act1.currentChoiceIndex)
             }
         } catch (error) {

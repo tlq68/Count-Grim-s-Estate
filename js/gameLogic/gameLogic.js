@@ -6,8 +6,6 @@ function testingMocha() {
 const gameLogic = (function() {
     let currentTextIndex = 0;
 
-   
-
     // Updates information to be displayed
     function update(choice) {
         currentTextIndex = 0;
