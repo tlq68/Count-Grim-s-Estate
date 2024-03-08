@@ -3,7 +3,7 @@ const ui = (function () {
     // typingSpeed will be adjusted for dynamic effects later
     // Define the typing speed variables
     let normalTypingSpeed = 50; // milliseconds per character
-    let fastTypingSpeed = 10; // milliseconds per character
+    let fastTypingSpeed = 5; // milliseconds per character
     let typingSpeed = normalTypingSpeed; // Set initial typing speed to normal
 
     let currentTextIndex = 0;
@@ -161,6 +161,14 @@ const ui = (function () {
         }
     });
 
+    
+    // Event listener for the escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            toggleMenuVisibility();
+        }
+    });
+
     function toggleMenuVisibility() {
         let menuContent;
         try {
@@ -201,13 +209,6 @@ const ui = (function () {
             }
         }
     }
-
-    // Event listener for the escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            toggleMenuVisibility();
-        }
-    });
 
     return {
         typingSpeed,
