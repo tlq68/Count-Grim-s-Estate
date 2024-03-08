@@ -40,45 +40,45 @@ const gameLogic = (function() {
     }
 
     // Resets game to initial state
-    function restart() {
-        const confirmRestart = window.confirm("Are you sure you want to restart the game?");
-        let {
-            xp,
-            health,
-            gold,
-            currentWeapon,
-            currentChoiceIndex,
-            currentTextIndex,
-            inventory,
-            choices,
-            currentAct
-        } = storage.getStats();
+    // function restart() {
+    //     const confirmRestart = window.confirm("Are you sure you want to restart the game?");
+    //     let {
+    //         xp,
+    //         health,
+    //         gold,
+    //         currentWeapon,
+    //         currentChoiceIndex,
+    //         currentTextIndex,
+    //         inventory,
+    //         choices,
+    //         currentAct
+    //     } = storage.getStats();
 
-        // If the player confirms the restart
-        if (confirmRestart) {
-            // Perform the restart actions
-            xp = 0;
-            health = 100;
-            gold = 50;
-            currentWeapon = 0;
+    //     // If the player confirms the restart
+    //     if (confirmRestart) {
+    //         // Perform the restart actions
+    //         xp = 0;
+    //         health = 100;
+    //         gold = 50;
+    //         currentWeapon = 0;
 
-            currentChoiceIndex = 0;
-            currentTextIndex = 0;
-            currentAct = 1;
+    //         currentChoiceIndex = 0;
+    //         currentTextIndex = 0;
+    //         currentAct = 1;
 
-            inventory = ["stick"];
-            goldText.innerText = gold;
-            healthText.innerText = health;
-            xpText.innerText = xp;
+    //         inventory = ["stick"];
+    //         goldText.innerText = gold;
+    //         healthText.innerText = health;
+    //         xpText.innerText = xp;
 
-            storage.saveGameState();
-            ui.update(choices[currentChoiceIndex]);
-            alert('You restarted')
-            ui.toggleMenuVisibility();
-        } else {
-            // If the player cancels, do nothing
-        }
-    } 
+    //         storage.saveGameState();
+    //         ui.update(choices[currentChoiceIndex]);
+    //         alert('You restarted')
+    //         ui.toggleMenuVisibility();
+    //     } else {
+    //         // If the player cancels, do nothing
+    //     }
+    // } 
 
     function returnToCheckpoint() {
         alert(checkpoint.name);
@@ -90,7 +90,6 @@ const gameLogic = (function() {
 
     return {
         testingMocha,
-        restart,
         returnToCheckpoint,
         showHint
     };

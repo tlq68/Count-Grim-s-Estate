@@ -62,8 +62,12 @@ storage.loadGameState();
 
     // Event listeners located here for convenience
     restartButton.addEventListener('click', storage.restartGame);
-    checkpointButton.addEventListener('click', gameLogic.returnToCheckpoint);
-    hintButton.addEventListener('click', gameLogic.showHint);
+    
+    // Change this back to gameLogic when we get to act2
+    // checkpointButton.addEventListener('click', gameLogic.returnToCheckpoint);
+    // hintButton.addEventListener('click', gameLogic.showHint);
+    checkpointButton.addEventListener('click', act1.returnToCheckpoint);
+    hintButton.addEventListener('click', act1.showHint);
 
     // Initial call for current choice information
     ui.update(choices[currentChoiceIndex]);

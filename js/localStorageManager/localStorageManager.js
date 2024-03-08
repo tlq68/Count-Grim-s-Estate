@@ -15,7 +15,7 @@ const storage = (function() {
     let inventory = ['stick'];
     let currentChoiceIndex = 0;
     let currentTextIndex = 0;
-    let currentAct = 2; // Default to Act 1
+    let currentAct = 1; // Default to Act 1
 
     getStats();
 

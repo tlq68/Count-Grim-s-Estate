@@ -24,6 +24,13 @@ const act1 = (function() {
         {name: "hint 1", id:1, hint: "You need to make choices and get to the end."}
     ]
 
+    function returnToCheckpoint() {
+        alert('Checkpoint here');
+    }
+    function showHint() {
+        alert('You need to make choices to progress the story');
+    }
+
     function getStats() {
         return {
             currentAct,
@@ -80,12 +87,14 @@ const act1 = (function() {
 
     const actTest = 'act 1 here'
     return {
+        returnToCheckpoint,
+        showHint,
         getStats,
         inFightWithDragon,
         giveUp,
         justWin,
         handleInventory, // Expose inventory handling function
-        actTest
+        
     }
 })();
 
