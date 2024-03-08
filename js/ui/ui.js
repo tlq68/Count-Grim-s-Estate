@@ -1,7 +1,11 @@
 /* ui.js */
 const ui = (function () {
     // typingSpeed will be adjusted for dynamic effects later
-    let typingSpeed = 50;
+    // Define the typing speed variables
+    let normalTypingSpeed = 50; // milliseconds per character
+    let fastTypingSpeed = 10; // milliseconds per character
+    let typingSpeed = normalTypingSpeed; // Set initial typing speed to normal
+
     let currentTextIndex = 0;
 
     function accessDOMElements() {
@@ -117,6 +121,7 @@ const ui = (function () {
         }, choice.text.length); // Adjust timing based on starting text length and typing speed
     }
 
+
     // Function to handle typing animation
     function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice) {
         function typeNextCharacter() {
@@ -141,6 +146,20 @@ const ui = (function () {
         buttonsContainer.classList.add('hide'); // Hide buttons before starting the typing animation
         typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, gameLogicChoice);
     }
+
+    // Event listener for keydown event (when spacebar is pressed)
+    document.addEventListener('keydown', function(event) {
+        if (event.code === 'Space') {
+            typingSpeed = fastTypingSpeed;
+        }
+    });
+
+    // Event listener for keyup event (when spacebar is released)
+    document.addEventListener('keyup', function(event) {
+        if (event.code === 'Space') {
+            typingSpeed = normalTypingSpeed;
+        }
+    });
 
     function toggleMenuVisibility() {
         let menuContent;
