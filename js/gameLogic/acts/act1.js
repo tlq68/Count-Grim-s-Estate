@@ -5,6 +5,8 @@ const act1 = (function() {
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
     let currentChoiceIndex = savedGameState.currentChoiceIndex;
     const currentAct = 1;
+    let inventory = []; // Initialize inventory array
+
     // Array of objects containing the game choices
     const choices = [
         {name: "start", id: 0,buttons: [{ text: "Go to store", func: () => handleChoice(0) },{ text: "Enter the house", func: () => handleChoice(1) },{ text: "Go to cave", func: () => handleChoice(2) },{ text: "Fight dragon", func: () => handleChoice(3) }],text: "You are in the town square. You see a sign that says Store."},
@@ -32,8 +34,6 @@ const act1 = (function() {
         }
     }
 
-    // Various functions to update choice. 
-   
     function handleChoice(choiceIndex) {
         currentChoiceIndex = choiceIndex;
         ui.update(choices[currentChoiceIndex]);
@@ -51,12 +51,40 @@ const act1 = (function() {
         alert("You literally just win")
     }
 
+    // Function to add an item to the inventory
+    function addItemToInventory(items) {
+        items.forEach(item => {
+            if (!inventory.includes(item)) {
+                inventory.push(item);
+            }
+        });
+    }
+
+    // Function to remove an item from the inventory
+    function removeItemFromInventory(item) {
+        inventory = inventory.filter(i => i !== item);
+    }
+
+    // Function to handle adding or removing items from inventory based on user input
+    function handleInventory(action, items) {
+        if (action === 'add') {
+            items.forEach(item => {
+                addItemToInventory(item);
+            });
+        } else if (action === 'remove') {
+            items.forEach(item => {
+                removeItemFromInventory(item);
+            });
+        }
+    }
+
     const actTest = 'act 1 here'
     return {
         getStats,
         inFightWithDragon,
         giveUp,
         justWin,
+        handleInventory, // Expose inventory handling function
         actTest
     }
 })();
