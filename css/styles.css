@@ -7,6 +7,8 @@ body {
   background-color: #0a0a23;
   color: #ffffff;
   padding: 10px;
+  white-space: pre-wrap;
+  text-indent: 35px;
 }
 
 #cursor {

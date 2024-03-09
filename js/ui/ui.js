@@ -122,22 +122,32 @@ const ui = (function () {
     }
 
 
-    // Function to handle typing animation
-    function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice) {
-        function typeNextCharacter() {
+// Function to handle typing animation
+function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice) {
+    function typeNextCharacter() {
+        if (gameLogicCurrentTextIndex < text.length) {
             textElement.textContent += text[gameLogicCurrentTextIndex];
             gameLogicCurrentTextIndex++;
-            if (gameLogicCurrentTextIndex < text.length) {
-                setTimeout(typeNextCharacter, typingSpeed);
-            } else {
-                // Animation complete, render buttons
-                renderButtons(choice);
-            }
+            // Wait for user input before typing the next character
+            waitForInput();
+        } else {
+            // Animation complete, render buttons
+            renderButtons(choice);
         }
-
-        // Start typing animation
-        typeNextCharacter();
     }
+
+    function waitForInput() {
+        document.addEventListener('keydown', function(event) {
+            // Clear previous text content before typing next text item
+            textElement.textContent = '';
+            // Check if any key is pressed
+            typeNextCharacter();
+        }, { once: true }); // Listen only once
+    }
+
+    // Start typing animation
+    typeNextCharacter();
+}
 
     // Main function to handle typing animation, rendering buttons, and accessing DOM elements
     function typeText(text, gameLogicChoice, gameLogicCurrentTextIndex) {
@@ -168,6 +178,7 @@ const ui = (function () {
             toggleMenuVisibility();
         }
     });
+
 
     function toggleMenuVisibility() {
         let menuContent;
