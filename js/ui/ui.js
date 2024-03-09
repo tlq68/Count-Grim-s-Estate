@@ -131,7 +131,11 @@ function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice)
             // Wait for user input before typing the next character
             waitForInput();
         } else {
-            // Animation complete, render buttons
+            // Render buttons if it's the last text element
+            //renderButtons(choice);
+            console.log('end')
+        }
+        if (gameLogicCurrentTextIndex == text.length) {
             renderButtons(choice);
         }
     }
@@ -139,7 +143,9 @@ function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice)
     function waitForInput() {
         document.addEventListener('keydown', function(event) {
             // Clear previous text content before typing next text item
-            textElement.textContent = '';
+            if (gameLogicCurrentTextIndex != text.length) {
+                textElement.textContent = '';
+            }
             // Check if any key is pressed
             typeNextCharacter();
         }, { once: true }); // Listen only once
