@@ -151,21 +151,29 @@ const ui = (function () {
                 typeCharacter();
             }
         }
-        
-        
-        
 
         function waitForInput() {
-            document.addEventListener('keydown', function(event) {
-                // Clear previous text content before typing next text item
-                if (gameLogicCurrentTextIndex != text.length) {
-                    textElement.textContent = '';
+            // Define a function to handle keydown event
+            function handleKeyDown(event) {
+                // Check if the pressed key is not 'Space'
+                if (event.code !== 'Space') {
+                    // Remove the event listener to prevent further keydown events
+                    document.removeEventListener('keydown', handleKeyDown);
+                    
+                    // Clear previous text content before typing next text item
+                    if (gameLogicCurrentTextIndex !== text.length) {
+                        textElement.textContent = '';
+                    }
+                    
+                    // Start typing next characters
+                    typeNextCharacter();
                 }
-                // Check if any key is pressed
-                typeNextCharacter();
-            }, { once: true }); // Listen only once
+            }
+            
+            // Add event listener for keydown event
+            document.addEventListener('keydown', handleKeyDown);
         }
-
+        
         // Start typing animation
         typeNextCharacter();
     }
@@ -193,8 +201,6 @@ const ui = (function () {
             event.preventDefault();
         }
     });
-
-
     
     // Event listener for the escape key
     document.addEventListener('keydown', function(event) {
