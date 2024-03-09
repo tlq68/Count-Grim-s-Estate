@@ -126,23 +126,33 @@ const ui = (function () {
         function typeNextCharacter() {
             if (gameLogicCurrentTextIndex < text.length) {
                 const currentText = text[gameLogicCurrentTextIndex];
-                // Loop through each character of the current text and type them out individually
-                for (let i = 0; i < currentText.length; i++) {
-                    setTimeout(function() {
-                        textElement.textContent += currentText[i];
+                let currentIndex = 0; // Track the index of the current character
+        
+                function typeCharacter() {
+                    if (currentIndex < currentText.length) {
+                        setTimeout(function() {
+                            textElement.textContent += currentText[currentIndex];
+                            currentIndex++; // Move to the next character
+                            typeCharacter(); // Recursively call typeCharacter() for the next character
+                        }, typingSpeed); // Use the current typing speed for each character
+                    } else {
                         // If it's the last character of the last text item, render buttons
-                        if (gameLogicCurrentTextIndex === text.length && i === currentText.length - 1) {
+                        if (gameLogicCurrentTextIndex === text.length - 1) {
                             renderButtons(choice);
-                        }
-                        // If it's the last character of the current text item, wait for user input
-                        if (i === currentText.length - 1) {
+                        } else {
+                            // If it's not the last text item, wait for user input
                             waitForInput();
                         }
-                    }, i * typingSpeed); // Delay each character by typingSpeed milliseconds
+                        gameLogicCurrentTextIndex++; // Move to the next text item after typing the current one
+                    }
                 }
-                gameLogicCurrentTextIndex++; // Move to the next text item after typing the current one
+        
+                // Start typing the characters recursively
+                typeCharacter();
             }
         }
+        
+        
         
 
         function waitForInput() {
@@ -168,10 +178,11 @@ const ui = (function () {
         typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, gameLogicChoice);
     }
 
-    // Event listener for keydown event (when spacebar is pressed)
+  // Event listener for keydown event (when spacebar is pressed)
     document.addEventListener('keydown', function(event) {
         if (event.code === 'Space') {
             typingSpeed = fastTypingSpeed;
+            event.preventDefault();
         }
     });
 
@@ -179,8 +190,10 @@ const ui = (function () {
     document.addEventListener('keyup', function(event) {
         if (event.code === 'Space') {
             typingSpeed = normalTypingSpeed;
+            event.preventDefault();
         }
     });
+
 
     
     // Event listener for the escape key
