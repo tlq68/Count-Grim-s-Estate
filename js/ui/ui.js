@@ -121,39 +121,44 @@ const ui = (function () {
         }, choice.text.length); // Adjust timing based on starting text length and typing speed
     }
 
-
-// Function to handle typing animation
-function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice) {
-    function typeNextCharacter() {
-        if (gameLogicCurrentTextIndex < text.length) {
-            textElement.textContent += text[gameLogicCurrentTextIndex];
-            gameLogicCurrentTextIndex++;
-            // Wait for user input before typing the next character
-            waitForInput();
-        } else {
-            // Render buttons if it's the last text element
-            //renderButtons(choice);
-            console.log('end')
-        }
-        if (gameLogicCurrentTextIndex == text.length) {
-            renderButtons(choice);
-        }
-    }
-
-    function waitForInput() {
-        document.addEventListener('keydown', function(event) {
-            // Clear previous text content before typing next text item
-            if (gameLogicCurrentTextIndex != text.length) {
-                textElement.textContent = '';
+    // Function to handle typing animation
+    function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice) {
+        function typeNextCharacter() {
+            if (gameLogicCurrentTextIndex < text.length) {
+                const currentText = text[gameLogicCurrentTextIndex];
+                // Loop through each character of the current text and type them out individually
+                for (let i = 0; i < currentText.length; i++) {
+                    setTimeout(function() {
+                        textElement.textContent += currentText[i];
+                        // If it's the last character of the last text item, render buttons
+                        if (gameLogicCurrentTextIndex === text.length && i === currentText.length - 1) {
+                            renderButtons(choice);
+                        }
+                        // If it's the last character of the current text item, wait for user input
+                        if (i === currentText.length - 1) {
+                            waitForInput();
+                        }
+                    }, i * typingSpeed); // Delay each character by typingSpeed milliseconds
+                }
+                gameLogicCurrentTextIndex++; // Move to the next text item after typing the current one
             }
-            // Check if any key is pressed
-            typeNextCharacter();
-        }, { once: true }); // Listen only once
-    }
+        }
+        
 
-    // Start typing animation
-    typeNextCharacter();
-}
+        function waitForInput() {
+            document.addEventListener('keydown', function(event) {
+                // Clear previous text content before typing next text item
+                if (gameLogicCurrentTextIndex != text.length) {
+                    textElement.textContent = '';
+                }
+                // Check if any key is pressed
+                typeNextCharacter();
+            }, { once: true }); // Listen only once
+        }
+
+        // Start typing animation
+        typeNextCharacter();
+    }
 
     // Main function to handle typing animation, rendering buttons, and accessing DOM elements
     function typeText(text, gameLogicChoice, gameLogicCurrentTextIndex) {
