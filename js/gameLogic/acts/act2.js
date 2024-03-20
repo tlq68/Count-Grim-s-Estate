@@ -4,6 +4,7 @@ import ui
 const act2 = (function() {
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
     let currentChoiceIndex = 0;
+    
     if (savedGameState && typeof savedGameState.currentChoiceIndex === 'number') {
         currentChoiceIndex = savedGameState.currentChoiceIndex;
     } else {
