@@ -3,7 +3,15 @@ import ui
  from "../../ui/ui.js";
 const act2 = (function() {
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
-    let currentChoiceIndex = savedGameState.currentChoiceIndex;
+    let currentChoiceIndex = 0;
+    if (savedGameState && typeof savedGameState.currentChoiceIndex === 'number') {
+        currentChoiceIndex = savedGameState.currentChoiceIndex;
+    } else {
+        console.warn('Invalid or missing currentChoiceIndex in savedGameState. Using default value.');
+    }
+    
+    const currentAct = 2;
+    let inventory = []; // Initialize inventory array
     
     // Array of objects containing the game choices
     const choices = [
