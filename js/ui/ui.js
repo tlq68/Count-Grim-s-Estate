@@ -42,6 +42,8 @@ const ui = (function () {
 
     let currentTextIndex = 0;
 
+    let menuOpen = false;
+
     function accessDOMElements() {
         const xpText = document.querySelector('#xpText');
         const healthText = document.querySelector('#healthText');
@@ -210,32 +212,37 @@ const ui = (function () {
         }
         
         function waitForInput() {
+            // Check if the menu is open, and if so, return without proceeding
+            if (menuOpen) {
+                return;
+            }
+    
             // Create the flashing text element
             const flashingTextContainer = createFlashingText('Press Any Key to Continue');
-        
+    
             // Append the container to the body
             document.body.appendChild(flashingTextContainer);
-        
+    
             // Define a function to handle keydown event
             function handleKeyDown(event) {
-                // Check if the pressed key is not 'Space'
-                if (event.code !== 'Space' && event.code !== 'Escape') {
+                // Check if the pressed key is not 'Space' and menu is not open
+                if (!menuOpen && event.code !== 'Space' && event.code !== 'Escape') {
                     // Remove the event listener to prevent further keydown events
                     document.removeEventListener('keydown', handleKeyDown);
-                    
+    
                     // Remove the flashing text container from the DOM
                     document.body.removeChild(flashingTextContainer);
-        
+    
                     // Clear previous text content before typing next text item
                     if (gameLogicCurrentTextIndex !== text.length) {
                         textElement.textContent = '';
                     }
-                    
+    
                     // Start typing next characters
                     typeNextCharacter();
                 }
             }
-            
+    
             // Add event listener for keydown event
             document.addEventListener('keydown', handleKeyDown);
         }
@@ -284,11 +291,11 @@ const ui = (function () {
         } catch (error) {
             console.error('Error opening menu:', error);
         }
-    
+
         try {
             const flashingIndicatorTextContainer = document.getElementById('flashing-text-container');
             const flashingIndicatorText = document.getElementById('flashing-text');
-    
+
             if (flashingIndicatorText) {
                 flashingIndicatorTextContainer.classList.toggle('hide');
                 flashingIndicatorText.classList.toggle('hide');
@@ -296,7 +303,10 @@ const ui = (function () {
         } catch (error) {
             console.log('Indicator not on screen. No action required.')
         }
-    
+
+        // Toggle menuOpen variable based on menu visibility
+        menuOpen = menuContent.classList.contains('hide');
+
         if (menuContent.classList.contains('hide')) {
             menuContent.classList.remove('hide');
         } else {
