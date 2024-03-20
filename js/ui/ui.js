@@ -280,9 +280,21 @@ const ui = (function () {
     function toggleMenuVisibility() {
         let menuContent;
         try {
-           menuContent = document.getElementById('menu');
+            menuContent = document.getElementById('menu');
         } catch (error) {
             console.error('Error opening menu:', error);
+        }
+    
+        try {
+            const flashingIndicatorTextContainer = document.getElementById('flashing-text-container');
+            const flashingIndicatorText = document.getElementById('flashing-text');
+    
+            if (flashingIndicatorText) {
+                flashingIndicatorTextContainer.classList.toggle('hide');
+                flashingIndicatorText.classList.toggle('hide');
+            }
+        } catch (error) {
+            console.log('Indicator not on screen. No action required.')
         }
     
         if (menuContent.classList.contains('hide')) {
@@ -291,6 +303,8 @@ const ui = (function () {
             menuContent.classList.add('hide');
         }
     }
+    
+    
 
     function update(choice) {
         currentTextIndex = 0;

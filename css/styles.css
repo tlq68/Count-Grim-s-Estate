@@ -17,7 +17,6 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(10, 0, 0, 0.5); /* Set background color with transparency */
-  padding: 15px;
   border-radius: 1px;
   display: flex;
   justify-content: center;
@@ -25,8 +24,8 @@ body {
 }
 
 #flashing-text {
-  color: #fff !important;
-  padding: 5px;
+  color: #fff;
+  padding: 15px;
   animation: flash 0.5s infinite alternate;
 }
 
