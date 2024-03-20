@@ -33,8 +33,6 @@ for (let i = 0; i < chunks.length; i++) {
 return result;
 }
 
-//const output = splitString()
-
 const ui = (function () {
     // typingSpeed will be adjusted for dynamic effects later
     // Define the typing speed variables
@@ -161,7 +159,7 @@ const ui = (function () {
     function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice) {
         function typeNextCharacter() {
             if (gameLogicCurrentTextIndex < text.length) {
-                const splitTextString = splitString(text, 50);
+                const splitTextString = splitString(text, MAX_INPUT_CHARS_LENGTH);
                 console.log(splitTextString)
                 const currentText = splitTextString[gameLogicCurrentTextIndex];
                 console.log('currentText' + currentText)
