@@ -7,8 +7,10 @@ body {
   background-color: #0a0a23;
   color: #ffffff;
   padding: 10px;
+  margin: 10px;
   white-space: pre-wrap;
   text-indent: 35px;
+  text-align: justify;
 }
 
 #flashing-text-container {
@@ -104,6 +106,9 @@ body {
   border: 1px solid #0a0a23;
   padding: 5px;
   color: #0a0a23;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #monsterStats {
@@ -124,4 +129,6 @@ button {
   background-color: #feac32;
   background-image: linear-gradient(#fecc4c, #ffac33);
   border: 3px solid #feac32;
+  padding: 3px;
+  margin: 3px;
 }
