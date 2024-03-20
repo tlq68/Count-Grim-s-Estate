@@ -8,30 +8,41 @@ function chunkString(str, maxLength) {
     return chunks;
         }
 
-const MAX_INPUT_CHARS_LENGTH = 50;
+const MAX_INPUT_CHARS_LENGTH = 250;
 
 // Function to split a long string into smaller chunks
 function splitString(inputString, maxChars) {
-const chunks = chunkString(inputString, maxChars);
-const result = [];
+    const chunks = chunkString(inputString, maxChars);
+    const result = [];
 
-for (let i = 0; i < chunks.length; i++) {
-    const chunk = chunks[i];
-    if (i === 0) {
-        result.push(chunk);
-    } else {
+    let tempChunk = '';
+    for (let i = 0; i < chunks.length; i++) {
+        const chunk = chunks[i];
         let lastDotIndex = chunk.lastIndexOf('. ');
-        if (lastDotIndex !== -1) {
-            result[result.length - 1] += chunk.substring(0, lastDotIndex + 2);
-            result.push(chunk.substring(lastDotIndex + 2));
+        if (chunk.includes('~-CONT-')) {
+            tempChunk += chunk.replace('~-CONT-', ''); // Concatenate chunks, removing the special string
+        } else if (lastDotIndex !== -1 && lastDotIndex < chunk.length - 2) {
+            // Check if the chunk contains '. ' before the end and split accordingly
+            result.push(tempChunk + chunk.substring(0, lastDotIndex + 2)); // Push the concatenated chunk up to '. '
+            tempChunk = chunk.substring(lastDotIndex + 2); // Store the remaining part in tempChunk
+        } else if (i === chunks.length - 1) {
+            // If it's the last chunk, include it without splitting
+            result.push(tempChunk + chunk);
         } else {
-            result[result.length - 1] += chunk;
+            if (tempChunk) {
+                result.push(tempChunk); // Push the concatenated chunk
+                tempChunk = ''; // Reset tempChunk
+            }
+            result.push(chunk); // Push the current chunk
         }
     }
+
+    return result;
 }
 
-return result;
-}
+
+
+
 
 const ui = (function () {
     // typingSpeed will be adjusted for dynamic effects later
