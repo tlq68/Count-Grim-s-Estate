@@ -190,15 +190,42 @@ const ui = (function () {
             }
         }
 
+        function createFlashingText(textContent) {
+            // Create a container for the flashing text element
+            const flashingTextContainer = document.createElement('div');
+            flashingTextContainer.setAttribute('id', 'flashing-text-container'); // Add ID to the container
+        
+            // Create the flashing text element
+            const flashingText = document.createElement('div');
+            flashingText.textContent = textContent;
+            flashingText.setAttribute('id', 'flashing-text'); // Add ID to the flashing text element
+            
+
+            // Add animation attribute to the flashing text element
+            flashingTextContainer.style.animation = 'flash 0.5s infinite alternate';
+            // Append the flashing text element to the container
+            flashingTextContainer.appendChild(flashingText);
+        
+            return flashingTextContainer;
+        }
+        
         function waitForInput() {
+            // Create the flashing text element
+            const flashingTextContainer = createFlashingText('Press Any Key to Continue');
+        
+            // Append the container to the body
+            document.body.appendChild(flashingTextContainer);
+        
             // Define a function to handle keydown event
             function handleKeyDown(event) {
                 // Check if the pressed key is not 'Space'
-                console.log(`waiting`)
                 if (event.code !== 'Space') {
                     // Remove the event listener to prevent further keydown events
                     document.removeEventListener('keydown', handleKeyDown);
                     
+                    // Remove the flashing text container from the DOM
+                    document.body.removeChild(flashingTextContainer);
+        
                     // Clear previous text content before typing next text item
                     if (gameLogicCurrentTextIndex !== text.length) {
                         textElement.textContent = '';

@@ -11,6 +11,34 @@ body {
   text-indent: 35px;
 }
 
+#flashing-text-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(10, 0, 0, 0.5); /* Set background color with transparency */
+  padding: 15px;
+  border-radius: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#flashing-text {
+  color: #fff !important;
+  padding: 5px;
+  animation: flash 0.5s infinite alternate;
+}
+
+@keyframes flash {
+  0% {
+      opacity: 0.7;
+  }
+  100% {
+      opacity: 1;
+  }
+  
+}
 #cursor {
   animation: blink 1s infinite;
 }
