@@ -3,7 +3,7 @@ import ui from "../../ui/ui.js";
 
 const act1 = (function() {
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
-    let currentChoiceIndex = savedGameState.currentChoiceIndex;
+    let currentChoiceIndex = savedGameState.currentChoiceIndex || 0;
     const currentAct = 1;
     let inventory = []; // Initialize inventory array
 
