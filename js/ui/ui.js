@@ -1,4 +1,40 @@
 /* ui.js */
+// Helper function to split a string into chunks based on max length
+function chunkString(str, maxLength) {
+    const chunks = [];
+    for (let i = 0; i < str.length; i += maxLength) {
+        chunks.push(str.slice(i, i + maxLength));
+    }
+    return chunks;
+        }
+
+const MAX_INPUT_CHARS_LENGTH = 50;
+
+// Function to split a long string into smaller chunks
+function splitString(inputString, maxChars) {
+const chunks = chunkString(inputString, maxChars);
+const result = [];
+
+for (let i = 0; i < chunks.length; i++) {
+    const chunk = chunks[i];
+    if (i === 0) {
+        result.push(chunk);
+    } else {
+        let lastDotIndex = chunk.lastIndexOf('. ');
+        if (lastDotIndex !== -1) {
+            result[result.length - 1] += chunk.substring(0, lastDotIndex + 2);
+            result.push(chunk.substring(lastDotIndex + 2));
+        } else {
+            result[result.length - 1] += chunk;
+        }
+    }
+}
+
+return result;
+}
+
+//const output = splitString()
+
 const ui = (function () {
     // typingSpeed will be adjusted for dynamic effects later
     // Define the typing speed variables
@@ -125,19 +161,23 @@ const ui = (function () {
     function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice) {
         function typeNextCharacter() {
             if (gameLogicCurrentTextIndex < text.length) {
-                const currentText = text[gameLogicCurrentTextIndex];
+                const splitTextString = splitString(text, 50);
+                console.log(splitTextString)
+                const currentText = splitTextString[gameLogicCurrentTextIndex];
+                console.log('currentText' + currentText)
                 let currentIndex = 0; // Track the index of the current character
         
                 function typeCharacter() {
-                    if (currentIndex < currentText.length) {
+                    if (currentIndex < currentText.length - 1) {
                         setTimeout(function() {
                             textElement.textContent += currentText[currentIndex];
                             currentIndex++; // Move to the next character
                             typeCharacter(); // Recursively call typeCharacter() for the next character
                         }, typingSpeed); // Use the current typing speed for each character
                     } else {
+                        console.log('how are here')
                         // If it's the last character of the last text item, render buttons
-                        if (gameLogicCurrentTextIndex === text.length - 1) {
+                        if (gameLogicCurrentTextIndex === splitTextString.length - 1) {
                             renderButtons(choice);
                         } else {
                             // If it's not the last text item, wait for user input
@@ -156,6 +196,7 @@ const ui = (function () {
             // Define a function to handle keydown event
             function handleKeyDown(event) {
                 // Check if the pressed key is not 'Space'
+                console.log(`waiting`)
                 if (event.code !== 'Space') {
                     // Remove the event listener to prevent further keydown events
                     document.removeEventListener('keydown', handleKeyDown);
@@ -183,6 +224,7 @@ const ui = (function () {
         const { textElement, buttonsContainer } = accessTextDOMElements();
         if (!textElement || !buttonsContainer) return; // Check if DOM elements are accessible
         buttonsContainer.classList.add('hide'); // Hide buttons before starting the typing animation
+        console.log(text)
         typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, gameLogicChoice);
     }
 

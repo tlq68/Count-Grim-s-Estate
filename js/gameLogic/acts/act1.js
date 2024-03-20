@@ -10,22 +10,12 @@ const act1 = (function() {
     // Array of objects containing the game choices
     const choices = [
         // Starting choices
-        {name: "start", id: 0,buttons: [{ text: "Go to store", func: () => handleChoice(0) },{ text: "Enter the house", func: () => handleChoice(1) },{ text: "Go to cave", func: () => handleChoice(2) },{ text: "Fight dragon", func: () => handleChoice(3) }],
-        text: [
-            "As Rupert Evers approaches the sign, his tall, shadowy figure casts elongated silhouettes upon the ground, blending with the encroaching dusk.",
-            "\"Welcome to the haunted mansion, where darkness lurks behind every corner and secrets whisper through the halls,\" the sign declares ominously.",
-            "He scoffs internally at the notion of a haunted mansion, dismissing it as nothing more than a fantastical tale spun to frighten the gullible.",
-            "After all, Rupert doesn't believe in the supernatural.",
-            "Yet, despite his rational skepticism, there's an undeniable pull, a magnetic force that draws him closer to the sign despite his reservations.",
-            "The mansion itself looms over him like a brooding sentinel, its once-grand facade now weathered by the passage of time and neglect.",
-            "It seems alive with stories untold, each window a watchful eye casting silent judgment upon those who dare to trespass.",
-            "Darkness seeps from the mansion's very pores, an oppressive weight that hangs heavy in the air, causing Rupert to shiver involuntarily.",
-            "Despite himself, however, he feels a thrill of anticipation tingling in his veins.",
-            "Perhaps it's the challenge of unraveling the mysteries within, or maybe it's just sheer curiosity that has brought him to this place.",
-            "Whatever the reason, Rupert finds himself inexorably drawn to the foreboding entrance of the mansion, his steps guided by an insatiable desire to confront whatever lies beyond its shadowy threshold."
-        ]
-    },
-        
+        // // Repeat the intro, Enter the house, Do nothing, End the game
+        {name: "start", id: 0,buttons: [{ text: "Repeat the intro", func: () => handleChoice(0) },{ text: "Enter the house", func: () => handleChoice(1) },{ text: "Do nothing", func: () => handleChoice(2) },{ text: "End the game", func: () => handleChoice(3) }],
+        text: 
+            "As Rupert Evers approaches the sign, his tall, shadowy figure casts elongated silhouettes upon the ground, blending with the encroaching dusk. Welcome to the haunted mansion, where darkness lurks behind every corner and secrets whisper through the halls, the sign declares ominously.He scoffs internally at the notion of a haunted mansion, dismissing it as nothing more than a fantastical tale spun to frighten the gullible. After all, Rupert doesn't believe in the supernatural.Yet, despite his rational skepticism, there's an undeniable pull, a magnetic force that draws him closer to the sign despite his reservations. The mansion itself looms over him like a brooding sentinel, its once-grand facade now weathered by the passage of time and neglect. It seems alive with stories untold, each window a watchful eye casting silent judgment upon those who dare to trespass.Darkness seeps from the mansion's very pores, an oppressive weight that hangs heavy in the air, causing Rupert to shiver involuntarily.Despite himself, however, he feels a thrill of anticipation tingling in his veins. Perhaps it's the challenge of unraveling the mysteries within, or maybe it's just sheer curiosity that has brought him to this place.Whatever the reason, Rupert finds himself inexorably drawn to the foreboding entrance of the mansion, his steps guided by an insatiable desire to confront whatever lies beyond its shadowy threshold."
+            
+        },
         {name: "enter house",id: 1,buttons: [{ text: "Go back to store", func: () => handleChoice(0) },{ text: "Enter next room", func: () => handleChoice(1) },{ text: "Go to cave", func: () => handleChoice(2) },{ text: "Fight dragon", func: () => handleChoice(3) }],
         text: ["You enter the house and are greeted."]},
         {name: "go cave",id: 2,buttons: [{ text: "Go back to the house", func: () => handleChoice(1) },{ text: "Go further in the cave", func: () => handleChoice(2) },{ text: "Fight dragon", func: () => handleChoice(3) }],
