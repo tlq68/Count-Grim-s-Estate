@@ -219,7 +219,7 @@ const ui = (function () {
             // Define a function to handle keydown event
             function handleKeyDown(event) {
                 // Check if the pressed key is not 'Space'
-                if (event.code !== 'Space') {
+                if (event.code !== 'Space' && event.code !== 'Escape') {
                     // Remove the event listener to prevent further keydown events
                     document.removeEventListener('keydown', handleKeyDown);
                     
