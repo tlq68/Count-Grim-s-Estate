@@ -41,9 +41,6 @@ function splitString(inputString, maxChars) {
 }
 
 
-
-
-
 const ui = (function () {
     // typingSpeed will be adjusted for dynamic effects later
     // Define the typing speed variables
