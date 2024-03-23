@@ -40,7 +40,6 @@ function splitString(inputString, maxChars) {
     return result;
 }
 
-
 const ui = (function () {
     // typingSpeed will be adjusted for dynamic effects later
     // Define the typing speed variables
@@ -150,29 +149,37 @@ const ui = (function () {
     function renderButtons(choice) {
         const buttonsContainer = document.getElementById('controls');
         buttonsContainer.innerHTML = ''; // Clear previous buttons
-        buttonsContainer.classList.add('hide'); // Hide buttons before rendering
 
         choice.buttons.forEach((buttonData, index) => {
             const choiceButton = document.createElement('button');
             choiceButton.innerText = buttonData.text;
-            choiceButton.onclick = buttonData.func;
+            choiceButton.onclick = () => {
+                buttonData.func(); // Call the button's function
+                buttonsContainer.classList.add('hide'); // Hide buttons after click
+            };
             choiceButton.id = `button${index + 1}`; // Set button id
             buttonsContainer.appendChild(choiceButton);
         });
 
-        setTimeout(() => {
-            buttonsContainer.classList.remove('hide'); // Show buttons after typing animation is complete
-        }, choice.text.length); // Adjust timing based on starting text length and typing speed
+        buttonsContainer.classList.remove('hide'); // Show buttons after rendering
     }
+
+    // Function to hide buttons initially
+    function hideButtons() {
+        const buttonsContainer = document.getElementById('controls');
+        buttonsContainer.classList.add('hide'); // Hide buttons initially
+    }
+
+    // Call the hideButtons function to hide buttons initially
+    hideButtons();
+    
 
     // Function to handle typing animation
     function typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, choice) {
         function typeNextCharacter() {
             if (gameLogicCurrentTextIndex < text.length) {
                 const splitTextString = splitString(text, MAX_INPUT_CHARS_LENGTH);
-                console.log(splitTextString)
                 const currentText = splitTextString[gameLogicCurrentTextIndex];
-                console.log('currentText' + currentText)
                 let currentIndex = 0; // Track the index of the current character
         
                 function typeCharacter() {
@@ -264,7 +271,6 @@ const ui = (function () {
         const { textElement, buttonsContainer } = accessTextDOMElements();
         if (!textElement || !buttonsContainer) return; // Check if DOM elements are accessible
         buttonsContainer.classList.add('hide'); // Hide buttons before starting the typing animation
-        console.log(text)
         typeTextAnimation(textElement, text, gameLogicCurrentTextIndex, gameLogicChoice);
     }
 
@@ -326,7 +332,6 @@ const ui = (function () {
 
     function update(choice) {
         currentTextIndex = 0;
-        console.log(choice.id)
         let textElement;
         try {
             textElement = document.getElementById('text');

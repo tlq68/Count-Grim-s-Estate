@@ -53,6 +53,10 @@ body {
   display: none;
 }
 
+#controls.hide {
+  display: none;
+}
+
 #open-menu {
   position: fixed;
   top: 2px;
